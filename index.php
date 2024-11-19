@@ -1,3 +1,20 @@
+<?php
+require 'config.php';
+require 'functions/signUp.php';
+
+/*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+
+  $sql = $connection->prepare("INSERT INTO userlogin(username, passWord) VALUES (?,?)");
+  $sql->bind_param("ss", $username, $password);
+  $sql->execute();
+
+  $sql->close();
+}*/
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,9 +128,9 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0"> </ul>
           <form class="d-flex">
             <ul class="nav-item">
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal2"
-            style="border-color:#A021EF; background:#A021EF; color: #FFFFFF;"> 
-              Sign Up</button>
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                style="border-color:#A021EF; background:#A021EF; color: #FFFFFF;">
+                Sign Up</button>
             </ul>
             <ul class="nav-item">
               <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -262,17 +279,53 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <input class="p-2 mb-2 container rounded-2" type="text" style="border-color:#A021EF;"
-              placeholder="USERNAME"> <br>
-            <input class="p-2 container rounded-2" type="password" style="border-color:#A021EF;" placeholder="PASSWORD">
-            <br>
+
+
+            <form method="post">
+
+              <label for="firstName">firstName:</label>
+              <input type="text" name="firstname"><br><br>
+
+              <label for="lastName">lastName:</label>
+              <input type="text" name="lastname"><br><br>
+
+              <label for="birthDate">Birth Date:</label>
+              <input type="date" id="birthDate" name="birthDate" required><br><br>
+
+              <label for="nationality">Nationality:</label>
+              <input type="text" id="nationality" name="nationality" required><br><br>
+
+              <label for="country">Country:</label>
+              <input type="text" id="country" name="country" required><br><br>
+
+              <label for="state">State:</label>
+              <input type="text" id="state" name="state" required><br><br>
+
+              <label for="zipCode">ZIP Code:</label>
+              <input type="text" id="zipCode" name="zipCode" required><br><br>
+
+              <label for="gender">Gender:</label>
+              <input type="text" id="gender" name="gender" required><br><br>
+
+              <label for="userType">User Type:</label>
+              <input type="text" id="usertype" name="usertype" required><br><br>
+
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required><br><br>
+
+              <label for="passwordKey">Password</label>
+              <input type="password" id="password" name="passwordKey" required><br><br>
+
+              <input type="submit" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
+                value="Sign Up">
+            </form>
 
 
           </div>
           <div class="modal-footer">
 
             <button type="button" class="btn"
-              style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; ">Login</button>
+              style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; ">LOGIN</button>
           </div>
         </div>
       </div>

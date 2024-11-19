@@ -1,0 +1,37 @@
+<?php
+include 'config.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    if (
+        empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['birthDate'])
+        || empty($_POST['nationality']) || empty($_POST['country']) || empty($_POST['state'])
+        || empty($_POST['zipCode']) || empty($_POST['gender']) || empty($_POST['usertype'])
+        || empty($_POST['gender']) || empty($_POST['usertype']) || empty($_POST['email'])
+    ) {
+        // Handle error, e.g., display an error message
+        echo "Please fill in all required fields.";
+        exit;
+
+
+    }
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $birthdate = $_POST['birthDate'];
+    $nationality = $_POST['nationality'];
+    $country = $_POST['country'];
+    $state = $_POST['state'];
+    $zipcode = $_POST['zipCode'];
+    $gender = $_POST['gender'];
+    $usertype = $_POST['usertype'];
+    $email = $_POST['email'];
+    $password = $_POST['passwordKey'];
+   
+    $sql = $connection->prepare("INSERT INTO `user_profile_registration` (`FIRSTNAME`, `LASTNAME`, `BIRTHDATE`, `NATIONALITY`, `COUNTRY`, `STATE`, `ZIP_CODE`,`GENDER`, `USER_TYPE`, `EMAIL`, `CREATE_DATE`, `passwordkey`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+    $sql->bind_param("ssssssissss", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zipcode, $gender, $usertype, $email, $password);
+    $sql->execute();
+    echo "<script>alert('Account Created')</script>";
+    $sql->close();
+
+}
+
