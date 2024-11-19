@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'cambawebsite';
+$database = 'cambawebsite_2';
 
 
 $connection = new mysqli($host,$username,$password,$database);
@@ -11,5 +11,5 @@ $connection = new mysqli($host,$username,$password,$database);
 if($connection -> connect_error){
     die("Error, Connection failed");
 }else{
-    echo "Connection Success";
+    echo "<label hidden>Connection Success</label>";
 }
