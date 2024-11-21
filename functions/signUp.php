@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (
@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql->bind_param("ssssssissss", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zipcode, $gender, $usertype, $email, $password);
     $sql->execute();
     echo "<script>alert('Account Created')</script>";
+
+    
     $sql->close();
-
+    
 }
-
