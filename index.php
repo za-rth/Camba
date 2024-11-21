@@ -1,8 +1,9 @@
 <?php
 
 require 'config.php';
-include 'functions/signUp.php';
 include 'functions/login.php';
+include 'functions/signUp.php';
+
 
 
 ?>
@@ -236,7 +237,7 @@ include 'functions/login.php';
 
 
 
-    <!-- Modal -->
+    <!--Login Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
@@ -250,7 +251,7 @@ include 'functions/login.php';
               placeholder="USERNAME"> <br>
             <input class="p-2 container rounded-2" type="password" name="password"style="border-color:#A021EF;" placeholder="PASSWORD">
             <br><br>
-            <input type="submit" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF;" name="login"  value="Login">
+            <input type="submit" name="login" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF;" name="login"  value="Login">
             </form>
             
 
@@ -309,7 +310,7 @@ include 'functions/login.php';
               <label for="passwordKey">Password</label>
               <input type="password" id="password" name="passwordKey" required><br><br>
 
-              <input type="submit" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
+              <input type="submit" name="signup"class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
                 value="Sign Up">
             </form>
 

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         || empty($_POST['nationality']) || empty($_POST['country']) || empty($_POST['state'])
         || empty($_POST['zipCode']) || empty($_POST['gender']) || empty($_POST['usertype'])
         || empty($_POST['gender']) || empty($_POST['usertype']) || empty($_POST['email'])
-    ) {
+        ) {
         // Handle error, e.g., display an error message
         echo "Please fill in all required fields.";
         exit;

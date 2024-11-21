@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-if($_SERVER['REQUEST_METHOD']=='POST'){
+if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])){
     
     if (isset($_POST['login'])){
         
@@ -12,6 +12,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $sql->bind_param("ss",$email,$password);
         $sql->execute();
         header("Location: buyerPage.php");
+        echo "<script>alert('Login Successful')</script>";
         $sql->close();    
 
     }
