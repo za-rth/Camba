@@ -11,8 +11,9 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])){
         $sql = $connection->prepare("SELECT EMAIL , PASSWORD FROM `user_account` WHERE `EMAIL` = ? AND `PASSWORD` = ?"  );
         $sql->bind_param("ss",$email,$password);
         $sql->execute();
-        header("Location: buyerPage.php");
         echo "<script>alert('Login Successful')</script>";
+        header("Location: buyerPage.php");
+        
         $sql->close();    
 
     }
