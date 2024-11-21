@@ -1,18 +1,10 @@
 <?php
+
 require 'config.php';
-require 'functions/signUp.php';
-
-/*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+include 'functions/login.php';
+include 'functions/signUp.php';
 
 
-  $sql = $connection->prepare("INSERT INTO userlogin(username, passWord) VALUES (?,?)");
-  $sql->bind_param("ss", $username, $password);
-  $sql->execute();
-
-  $sql->close();
-}*/
 
 ?>
 <!DOCTYPE html>
@@ -245,7 +237,7 @@ require 'functions/signUp.php';
 
 
 
-    <!-- Modal -->
+    <!--Login Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
@@ -254,17 +246,19 @@ require 'functions/signUp.php';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <input class="p-2 mb-2 container rounded-2" type="text" style="border-color:#A021EF;"
+            <form method="post" action="">
+            <input class="p-2 mb-2 container rounded-2" name="email" type="text" style="border-color:#A021EF;"
               placeholder="USERNAME"> <br>
-            <input class="p-2 container rounded-2" type="password" style="border-color:#A021EF;" placeholder="PASSWORD">
-            <br>
+            <input class="p-2 container rounded-2" type="password" name="password"style="border-color:#A021EF;" placeholder="PASSWORD">
+            <br><br>
+            <input type="submit" name="login" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF;" name="login"  value="Login">
+            </form>
+            
 
 
           </div>
           <div class="modal-footer">
-
-            <button type="button" class="btn"
-              style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; ">Login</button>
+             
           </div>
         </div>
       </div>
@@ -281,7 +275,7 @@ require 'functions/signUp.php';
           <div class="modal-body">
 
 
-            <form method="post">
+            <form method="post" action="" >
 
               <label for="firstName">firstName:</label>
               <input type="text" name="firstname"><br><br>
@@ -316,7 +310,7 @@ require 'functions/signUp.php';
               <label for="passwordKey">Password</label>
               <input type="password" id="password" name="passwordKey" required><br><br>
 
-              <input type="submit" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
+              <input type="submit" name="signup"class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
                 value="Sign Up">
             </form>
 

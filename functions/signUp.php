@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (
@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         || empty($_POST['nationality']) || empty($_POST['country']) || empty($_POST['state'])
         || empty($_POST['zipCode']) || empty($_POST['gender']) || empty($_POST['usertype'])
         || empty($_POST['gender']) || empty($_POST['usertype']) || empty($_POST['email'])
-    ) {
+        ) {
         // Handle error, e.g., display an error message
         echo "Please fill in all required fields.";
         exit;
@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql->bind_param("ssssssissss", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zipcode, $gender, $usertype, $email, $password);
     $sql->execute();
     echo "<script>alert('Account Created')</script>";
+
+    
     $sql->close();
-
+    
 }
-
