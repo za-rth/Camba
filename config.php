@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'cambawebsite_2';
+$database = 'cambawebsite';
 
 
 $connection = new mysqli($host,$username,$password,$database);
