@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['passwordKey'];
    
-    $sql = $connection->prepare("INSERT INTO `user_profile_registration` (`FIRSTNAME`, `LASTNAME`, `BIRTHDATE`, `NATIONALITY`, `COUNTRY`, `STATE`, `ZIP_CODE`,`GENDER`, `USER_TYPE`, `EMAIL`, `CREATE_DATE`, `passwordkey`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+    $sql = $connection->prepare("INSERT INTO `user_profile_registration` (`FIRSTNAME`, `LASTNAME`, `BIRTHDATE`, `NATIONALITY`, `COUNTRY`, `STATE`, `ZIP_CODE`,`GENDER`, `USER_TYPE`, `EMAIL`, `PASSPHRASE`,`DATE_CREATED`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW())");
     $sql->bind_param("ssssssissss", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zipcode, $gender, $usertype, $email, $password);
     $sql->execute();
     echo "<script>alert('Account Created')</script>";
