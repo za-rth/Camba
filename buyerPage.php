@@ -2,7 +2,7 @@
 include 'config.php';
 include 'resources/bootstrap&googleFonts.php';
 session_start();
-$_SESSION["username"] = "TEST";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,9 +10,7 @@ $_SESSION["username"] = "TEST";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title><?php echo $title;?> </title>
   <style>
     :root {
       --primary-purple: #e8cafb;
@@ -188,7 +186,7 @@ $_SESSION["username"] = "TEST";
         <nav aria-label="Main navigation">
                 
                 <button class="btn btn-link text-dark text-decoration-none fs-4"> <a href="buyerPage.php"></a>Home</button>
-                <form action="functions/logOut.php"><button class="btn btn-link text-dark text-decoration-none fs-4" type="submit"> Log Out</button></form>
+                <button class="btn btn-link text-dark text-decoration-none fs-4" type="submit"><a href="functions/logOut.php">Log Out</a> </button>
             </nav>
     </header>
 
@@ -204,7 +202,7 @@ $_SESSION["username"] = "TEST";
                 <div class="profile-section">
                     <img src="images/a.jpg" alt="User Profile" class="profile-image">
                     <div>
-                    <h2 class="h5 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["email"]); ?></h2>
+                    <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["email"]); ?></h3>
                         <p class="mb-0"> Cay Aguanta</p>
                     </div>
                 </div>

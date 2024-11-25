@@ -266,14 +266,15 @@ include 'resources/bootstrap&googleFonts.php';
 
             <form method="post">
 
-              <div class="mb-3">
-                <label for="firstName" class="form-label">First Name:</label>
-                <input type="text" class="form-control" id="firstName" name="firstname" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="lastName" class="form-label">Last Name:</label>
-                <input type="text" class="form-control" id="lastName" name="lastname" required>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="firstName" class="form-label">First Name:</label>
+                  <input type="text" class="form-control" id="firstName" name="firstname" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName" class="form-label">Last Name:</label>
+                  <input type="text" class="form-control" id="lastName" name="lastname" required>
+                </div>
               </div>
 
               <div class="mb-3">
@@ -293,24 +294,26 @@ include 'resources/bootstrap&googleFonts.php';
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="nationality" class="form-label">Nationality:</label>
-                <input type="text" class="form-control" id="nationality" name="nationality" required>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="nationality" class="form-label">Nationality:</label>
+                  <input type="text" class="form-control" id="nationality" name="nationality" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="country" class="form-label">Country:</label>
+                  <input type="text" class="form-control" id="country" name="country" required>
+                </div>
               </div>
 
-              <div class="mb-3">
-                <label for="country" class="form-label">Country:</label>
-                <input type="text" class="form-control" id="country" name="country" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="state" class="form-label">State:</label>
-                <input type="text" class="form-control" id="state" name="state" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="zipCode" class="form-label">ZIP Code:</label>
-                <input type="text" class="form-control" id="zipCode" name="zipCode" required>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="state" class="form-label">State:</label>
+                  <input type="text" class="form-control" id="state" name="state" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="zipCode" class="form-label">ZIP Code:</label>
+                  <input type="text" class="form-control" id="zipCode" name="zipCode" required>
+                </div>
               </div>
 
               <div class="mb-3">
@@ -328,15 +331,14 @@ include 'resources/bootstrap&googleFonts.php';
                 <input type="password" class="form-control" id="passwordKey" name="passwordKey" required>
               </div>
 
-              <button type="submit" name="signup" class="btn btn-primary w-100">Sign Up</button>
+              <button type="submit" name="signup" style="background-color: #A021EF; " class="btn text-white  w-100">Sign Up</button>
 
             </form>
 
           </div>
           <div class="modal-footer">
 
-            <button type="button" class="btn"
-              style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; ">LOGIN</button>
+           
           </div>
         </div>
       </div>

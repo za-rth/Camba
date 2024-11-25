@@ -1,5 +1,7 @@
 <?php
-include 'config.php';
+/*include 'config.php';*/
+include dirname(__DIR__) . '/config.php';
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
@@ -19,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         if ($result->num_rows > 0) {
             // Fetch the user's details
             $row = $result->fetch_assoc();
-            $_SESSION['USER_ID'] = $row['USER_ID'];
-            $_SESSION['EMAIL'] = $row['EMAIL'];
-            $_SESSION['USER_TYPE'] = $row['USER_TYPE'];
+            $_SESSION['user_id'] = $row['USER_ID'];
+            $_SESSION['email'] = $row['EMAIL'];
+            $_SESSION['user_type'] = $row['USER_TYPE'];
             $userType = $row['USER_TYPE'];
 
             // Welcome message
