@@ -1,5 +1,7 @@
 <?php
 include 'resources/bootstrap&googleFonts.php';
+session_start();
+$_SESSION["username"] = "TEST";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,7 +185,9 @@ include 'resources/bootstrap&googleFonts.php';
     <header class="top-header">
       <img src="images/CAMBA.png" alt="Website Logo" class="logo">
         <nav aria-label="Main navigation">
+                
                 <button class="btn btn-link text-dark text-decoration-none fs-4"> <a href="buyerPage.php"></a>Home</button>
+                <form action="functions/logOut.php"><button class="btn btn-link text-dark text-decoration-none fs-4" type="submit"> Log Out</button></form>
             </nav>
     </header>
 
@@ -199,6 +203,7 @@ include 'resources/bootstrap&googleFonts.php';
                 <div class="profile-section">
                     <img src="images/Onin.jpg" alt="User Profile" class="profile-image">
                     <div>
+                      <?php echo $_SESSION["username"]?>
                         <h2 class="h5 fw-bold mb-1">Onin</h2>
                         <p class="mb-0"> Cay Aguanta</p>
                     </div>
