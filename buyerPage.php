@@ -1,4 +1,5 @@
 <?php
+
 include 'resources/bootstrap&googleFonts.php';
 session_start();
 $_SESSION["username"] = "TEST";

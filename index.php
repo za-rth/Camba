@@ -4,7 +4,7 @@ require 'config.php';
 require_once 'functions/login.php';
 require_once 'functions/signUp.php';
 include 'resources/bootstrap&googleFonts.php';
-
+session_start();
 
 ?>
 <!DOCTYPE html>
@@ -264,10 +264,10 @@ include 'resources/bootstrap&googleFonts.php';
             <form method="post" action="" >
 
               <label for="firstName">firstName:</label>
-              <input type="text" name="firstname"><br><br>
+              <input type="text" required name="firstname"><br><br>
 
               <label for="lastName">lastName:</label>
-              <input type="text" name="lastname"><br><br>
+              <input type="text" required  name="lastname"><br><br>
 
               <label for="birthDate">Birth Date:</label>
               <input type="date" id="birthDate" name="birthDate" required><br><br>
@@ -276,7 +276,7 @@ include 'resources/bootstrap&googleFonts.php';
               <input type="text" id="nationality" name="nationality" required><br><br>
 
               <label for="country">Country:</label>
-              <input type="text" id="country" name="country" required><br><br>
+              <input type="text"  id="country" name="country" required><br><br>
 
               <label for="state">State:</label>
               <input type="text" id="state" name="state" required><br><br>
