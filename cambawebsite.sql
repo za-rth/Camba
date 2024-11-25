@@ -32,7 +32,7 @@ AFTER INSERT
 ON `user_profile_registration`
 FOR EACH ROW
 BEGIN
-  INSERT INTO `user_account`(EMAIL, PASSWORD, FK_REGISTER_ID)
+  INSERT INTO `user_account`(EMAIL, PASSWORD, FK_REGISTER_ID2)
   VALUES (NEW.EMAIL, NEW.PASSPHRASE, NEW.REGISTER_ID); //user_profile_registration
 END //
 
