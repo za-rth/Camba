@@ -1,5 +1,5 @@
 <?php
-
+include 'config.php';
 include 'resources/bootstrap&googleFonts.php';
 session_start();
 $_SESSION["username"] = "TEST";
@@ -202,12 +202,9 @@ $_SESSION["username"] = "TEST";
     <main class="main-content">
             <aside class="sidebar">
                 <div class="profile-section">
-                    <img src="images/Onin.jpg" alt="User Profile" class="profile-image">
+                    <img src="images/a.jpg" alt="User Profile" class="profile-image">
                     <div>
-                      <?php echo $_SESSION["username"]
-                      
-                      ?>
-                        <h2 class="h5 fw-bold mb-1">Onin</h2>
+                    <h2 class="h5 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["email"]); ?></h2>
                         <p class="mb-0"> Cay Aguanta</p>
                     </div>
                 </div>
