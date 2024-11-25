@@ -204,7 +204,9 @@ $_SESSION["username"] = "TEST";
                 <div class="profile-section">
                     <img src="images/Onin.jpg" alt="User Profile" class="profile-image">
                     <div>
-                      <?php echo $_SESSION["username"]?>
+                      <?php echo $_SESSION["username"]
+                      
+                      ?>
                         <h2 class="h5 fw-bold mb-1">Onin</h2>
                         <p class="mb-0"> Cay Aguanta</p>
                     </div>
