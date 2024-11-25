@@ -16,7 +16,7 @@ session_start();
 </head>
 
 <body>
-  
+
   <style>
     .image-container {
       position: relative;
@@ -142,10 +142,11 @@ session_start();
 
             <br>
             <div class="d-flex " style="font-weight: 100;">
-              <button class="btn" style="border-color:#A021EF ; background:#A021EF; color: #FFFFFF; " ><a
-                  class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal2" >Get A Free Account</a></button>
-              <button class="btn" style=" background:#FFFFFF; color: #A021EF; "><a class="nav-link"
-                  href="">Learn More..</a></button>
+              <button class="btn" style="border-color:#A021EF ; background:#A021EF; color: #FFFFFF; "><a
+                  class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal2">Get A Free
+                  Account</a></button>
+              <button class="btn" style=" background:#FFFFFF; color: #A021EF; "><a class="nav-link" href="">Learn
+                  More..</a></button>
             </div>
           </div>
 
@@ -233,18 +234,20 @@ session_start();
           </div>
           <div class="modal-body">
             <form method="post" action="">
-            <input class="p-2 mb-2 container rounded-2" name="email" type="text" style="border-color:#A021EF;"
-              placeholder="USERNAME"> <br>
-            <input class="p-2 container rounded-2" type="password" name="password"style="border-color:#A021EF;" placeholder="PASSWORD">
-            <br><br>
-            <input type="submit" name="login" class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF;" name="login"  value="Login">
+              <input class="p-2 mb-2 container rounded-2" name="email" type="text" style="border-color:#A021EF;"
+                placeholder="USERNAME"> <br>
+              <input class="p-2 container rounded-2" type="password" name="password" style="border-color:#A021EF;"
+                placeholder="PASSWORD">
+              <br><br>
+              <input type="submit" name="login" class="btn"
+                style="border-color:#A021EF; background:#FFFFFF; color: #A021EF;" name="login" value="Login">
             </form>
-            
+
 
 
           </div>
           <div class="modal-footer">
-             
+
           </div>
         </div>
       </div>
@@ -261,13 +264,13 @@ session_start();
           <div class="modal-body">
 
 
-            <form method="post" >
+            <form method="post">
 
               <label for="firstName">firstName:</label>
               <input type="text" required name="firstname"><br><br>
 
               <label for="lastName">lastName:</label>
-              <input type="text" required  name="lastname"><br><br>
+              <input type="text" required name="lastname"><br><br>
 
               <label for="birthDate">Birth Date:</label>
               <input type="date" id="birthDate" name="birthDate" required><br><br>
@@ -276,7 +279,7 @@ session_start();
               <input type="text" id="nationality" name="nationality" required><br><br>
 
               <label for="country">Country:</label>
-              <input type="text"  id="country" name="country" required><br><br>
+              <input type="text" id="country" name="country" required><br><br>
 
               <label for="state">State:</label>
               <input type="text" id="state" name="state" required><br><br>
@@ -285,10 +288,25 @@ session_start();
               <input type="text" id="zipCode" name="zipCode" required><br><br>
 
               <label for="gender">Gender:</label>
-              <input type="text" id="gender" name="gender" required><br><br>
+              <select class="form-select" aria-label="Default select example" name="gender">
+                <option selected>Choose Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+       
+              </select>
+              
+            
 
               <label for="userType">User Type:</label>
-              <input type="text" id="usertype" name="usertype" required><br><br>
+              <select class="form-select" aria-label="Default select example" name="usertype">
+                <option selected>Select </option>
+                <option value="Buyer">Buyer</option>
+                <option value="Artist">Artist</option>
+       
+              </select>
+              
+
+              <br><br>
 
               <label for="email">Email:</label>
               <input type="email" id="email" name="email" required><br><br>
@@ -296,8 +314,8 @@ session_start();
               <label for="passwordKey">Password</label>
               <input type="password" id="password" name="passwordKey" required><br><br>
 
-              <input type="submit" name="signup"class="btn" style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; "
-                value="Sign Up">
+              <input type="submit" name="signup" class="btn"
+                style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; " value="Sign Up">
             </form>
 
 
