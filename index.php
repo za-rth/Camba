@@ -261,7 +261,7 @@ session_start();
           <div class="modal-body">
 
 
-            <form method="post" action="" >
+            <form method="post" >
 
               <label for="firstName">firstName:</label>
               <input type="text" required name="firstname"><br><br>
