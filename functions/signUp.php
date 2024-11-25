@@ -6,13 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (
         empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['birthDate'])
         || empty($_POST['nationality']) || empty($_POST['country']) || empty($_POST['state'])
-        || empty($_POST['zipCode']) || empty($_POST['gender']) || empty($_POST['usertype'])
-        || empty($_POST['gender']) || empty($_POST['usertype']) || empty($_POST['email'])
+        || empty($_POST['zipCode']) || empty($_POST['gender']) || empty($_POST['usertype']) 
         ) {
         // Handle error, e.g., display an error message
-        echo "Please fill in all required fields.";
-        exit;
-
+        echo "<script>alert('Please fill in all required fields.')</script>";
+    
+        die("Please fill in all required fields.");
+            
 
     }
     $firstname = $_POST['firstname'];

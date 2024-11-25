@@ -1,8 +1,8 @@
 <?php
 
 require 'config.php';
-include 'functions/login.php';
-include 'functions/signUp.php';
+require_once 'functions/login.php';
+require_once 'functions/signUp.php';
 include 'resources/bootstrap&googleFonts.php';
 
 
@@ -142,10 +142,10 @@ include 'resources/bootstrap&googleFonts.php';
 
             <br>
             <div class="d-flex " style="font-weight: 100;">
-              <button class="btn" style="border-color:#A021EF ; background:#A021EF; color: #FFFFFF; "><a
-                  class="nav-link" href="{{route('login')}}">Get A Free Account</a></button>
+              <button class="btn" style="border-color:#A021EF ; background:#A021EF; color: #FFFFFF; " ><a
+                  class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal2" >Get A Free Account</a></button>
               <button class="btn" style=" background:#FFFFFF; color: #A021EF; "><a class="nav-link"
-                  href="{{route('login')}}">Learn More..</a></button>
+                  href="">Learn More..</a></button>
             </div>
           </div>
 
