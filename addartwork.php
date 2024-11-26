@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-    <style>
-        .artwork-container {
+        <style>.artwork-container {
             background-color: #fff;
             max-width: 1440px;
             margin: 0 auto;
@@ -18,7 +18,7 @@
 
         .header {
             background-color: #fff;
-            box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             padding: 12px 18px;
             display: flex;
             justify-content: space-between;
@@ -79,7 +79,7 @@
             gap: 20px;
             position: relative;
         }
-        
+
         .artwork-image {
             width: 36%;
             aspect-ratio: 1.17;
@@ -112,6 +112,7 @@
             font-size: 16px;
             transition: all 0.3s ease;
         }
+
         .btn-edit {
             background-color: #ffc107;
             border: none;
@@ -123,6 +124,7 @@
             border: none;
             color: #fff;
         }
+
         .btn-edit:hover {
             background-color: #ffca2c;
         }
@@ -164,18 +166,19 @@
         }
     </style>
 </head>
+
 <body>
     <div class="artwork-container">
         <header class="header">
             <img src="images/CAMBA.png" alt="Logo" class="logo">
-            <a href="#" class="home-link">Home</a>
+            <a href="sellerPage.php" class="home-link">Home</a>
         </header>
 
         <main class="container">
             <input type="search" class="search-bar" placeholder="Search here..." aria-label="Search artworks">
-            
+
             <h1 class="section-title">Manage Your Artworks</h1>
-            
+
             <button type="button" class="add-artwork-btn" data-bs-toggle="modal" data-bs-target="#addArtworkModal">
                 Add New Artwork +
             </button>
@@ -239,7 +242,8 @@
         </main>
     </div>
 
-    <div class="modal fade" id="addArtworkModal" tabindex="-1" aria-labelledby="addArtworkModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addArtworkModal" tabindex="-1" aria-labelledby="addArtworkModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -278,7 +282,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editArtworkModal" tabindex="-1" aria-labelledby="editArtworkModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editArtworkModal" tabindex="-1" aria-labelledby="editArtworkModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -318,7 +323,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -339,13 +345,13 @@
     <script>
         let currentArtworkId = null;
 
-        document.getElementById('artworkForm').addEventListener('submit', function(e) {
+        document.getElementById('artworkForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
             saveArtwork(formData);
         });
 
-        document.getElementById('editArtworkForm').addEventListener('submit', function(e) {
+        document.getElementById('editArtworkForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
             updateArtwork(formData);
@@ -382,4 +388,5 @@
         }
     </script>
 </body>
+
 </html>

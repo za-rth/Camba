@@ -210,7 +210,7 @@ session_start();
                 <nav aria-label="Side navigation">
                     <div class="nav-item">
                         <img src="images/L1.jpg" alt="" class="nav-icon">
-                        <span>Profile</span>
+                        <button class="btn btn-link text-dark text-decoration-none fs-4"><a href="editPROFILE.php">Profile</a></button>
                     </div>
                     <div class="nav-item">
                         <img src="images/L2.jpg" alt="" class="nav-icon">
