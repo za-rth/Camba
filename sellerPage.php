@@ -291,7 +291,7 @@ session_start();
                     <li class="nav-item ml-3">
                         <button type="button" class="btn p-3 " 
                             style="border-color:#A021EF; color: #A021EF;" >
-                            <a href="functions/logOut.php" style="color: #A021EF;"></a>Logout</button>
+                            <a href="functions/logOut.php" style="color: #A021EF;">Logout</a></button>
                     </li>
                     </li>
                 </ul>
@@ -314,7 +314,7 @@ session_start();
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <button class="manage-gallery-btn" aria-label="Manage Gallery"><a href="addartwork.php">Manage
+                        <button class="manage-gallery-btn" aria-label="Manage Gallery" style="color: #A021EF;"><a style="p-5"href="addartwork.php">Manage
                                 Gallery</a></button>
 
                     </div>
@@ -336,7 +336,7 @@ session_start();
                                 <button class="follow-btn" aria-label="Follow Xanne">Follow +</button>
                             </div>
                             <address class="text-center mt-3">
-                                <div>Cebu City, Philippines</div>
+                                <div><?php echo htmlspecialchars($_SESSION[""])?></div>
                                 <a href="mailto:roxanne.normandia@gmail.com"
                                     class="text-decoration-none text-dark mt-2 d-block">
                                     <?php echo htmlspecialchars($_SESSION["email"]); ?>
