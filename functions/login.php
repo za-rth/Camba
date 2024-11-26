@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         echo "<script>alert('Please fill in all fields.')</script>";
     } else {
         // Prepare and execute the SQL query
-        $sql = $connection->prepare("SELECT USER_ID,EMAIL,PASSWORD,USER_TYPE FROM  `user_account` WHERE `EMAIL` = ? AND `PASSWORD` = ? ");
+        $sql = $connection->prepare("SELECT USER_ID,EMAIL,PASSWORD,USER_TYPE,FIRSTNAME,LASTNAME FROM  `user_account` WHERE `EMAIL` = ? AND `PASSWORD` = ? ");
         $sql->bind_param("ss", $email, $password);
         $sql->execute();
         $result = $sql->get_result();
@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         if ($result->num_rows > 0) {
             // Fetch the user's details
             $row = $result->fetch_assoc();
+            
+            if (!isset($row['FIRSTNAME'])) {
+                die("Error: FIRSTNAME field is missing from the database query result.");
+            }        
+            $_SESSION['firstname'] = $row['FIRSTNAME'];
+            $_SESSION['lastname'] = $row['LASTNAME'];
             $_SESSION['user_id'] = $row['USER_ID'];
             $_SESSION['email'] = $row['EMAIL'];
             $_SESSION['user_type'] = $row['USER_TYPE'];

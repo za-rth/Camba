@@ -283,14 +283,13 @@ session_start();
             <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
                 <ul class="navbar-nav ">
                     <li class="nav-item mr-3">
-                        <button type="button" class="btn p-3 " 
+                        <button type="button" class="btn p-3 "
                             style="border-color:#A021EF; background:#A021EF; color: #FFFFFF;">
                             Home</button>
                     </li>
-                    
+
                     <li class="nav-item ml-3">
-                        <button type="button" class="btn p-3 " 
-                            style="border-color:#A021EF; color: #A021EF;" >
+                        <button type="button" class="btn p-3 " style="border-color:#A021EF; color: #A021EF;">
                             <a href="functions/logOut.php" style="color: #A021EF;">Logout</a></button>
                     </li>
                     </li>
@@ -314,7 +313,8 @@ session_start();
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <button class="manage-gallery-btn" aria-label="Manage Gallery" style="color: #A021EF;"><a style="p-5"href="addartwork.php">Manage
+                        <button class="manage-gallery-btn" aria-label="Manage Gallery" style="color: #A021EF;"><a
+                                style="p-5" href="addartwork.php">Manage
                                 Gallery</a></button>
 
                     </div>
@@ -327,16 +327,16 @@ session_start();
                         <div class="profile-card">
                             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/09712380ac6c57b440e20ebd7c30d5ba5ec17b2bbf6272cc73685c8af38b472c?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
                                 alt="Roxanne Normandia's profile" class="profile-image">
-                            <div class="username">Xanne</div>
+                            <div class="username"> <?php echo htmlspecialchars($_SESSION["firstname"])?></div>
                             <div class="stats">
-                                <span>Roxanne Normandia</span>
+                                <span><?php echo htmlspecialchars($_SESSION["firstname"]),$_SESSION["lastname"]; ?></span>
                                 <span aria-label="12.4 thousand followers">12.4K</span>
                             </div>
                             <div class="d-flex justify-content-end px-3">
                                 <button class="follow-btn" aria-label="Follow Xanne">Follow +</button>
                             </div>
                             <address class="text-center mt-3">
-                                <div><?php echo htmlspecialchars($_SESSION[""])?></div>
+                                
                                 <a href="mailto:roxanne.normandia@gmail.com"
                                     class="text-decoration-none text-dark mt-2 d-block">
                                     <?php echo htmlspecialchars($_SESSION["email"]); ?>

@@ -220,9 +220,10 @@ session_start();
         <div class="profile-section">
           <img src="images/a.jpg" alt="User Profile" class="profile-image">
           <div>
-            <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["email"]); ?></h3>
-            
-            <p class="mb-0"> ?></p>
+            <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["firstname"]); ?></h3>
+            <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["lastname"]); ?></h3>
+
+            <p class="mb-0"></p>
           </div>
         </div>
 
