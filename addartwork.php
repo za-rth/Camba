@@ -1,10 +1,20 @@
+<?php
+include 'config.php';
+
+session_start();
+
+$sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` FROM `artwork_product_info`";
+$all_product = $connection->query($sql);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artwork Management</title>
+    <title><?php echo $title; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -184,24 +194,39 @@
             </button>
 
             <h2 class="section-title">Your Existing Artworks</h2>
+            <?php
+            while ($row = $all_product->fetch_assoc()) {
+                ?>
+                <div class="artwork-card">
+                    <!-- Dynamically set the image source -->
+                    <img src="images/<?php echo htmlspecialchars($row['IMG_NAME']); ?>"
+                        alt="<?php echo htmlspecialchars($row['TITLE']); ?>" class="artwork-image">
 
-            <div class="artwork-card">
-                <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
-                <div class="artwork-details">
-                    <div class="artwork-title">Title: "Resting in Peace"</div>
-                    <div>Description: Mixed Media: Recycled Plastic Bags & Oil Paint</div>
-                    <div>Size: 25" x 30"</div>
-                    <div>Year: 2023</div>
+                    <div class="artwork-details">
+                        <!-- Display artwork title -->
+                        <div class="artwork-title">Title: <?php echo htmlspecialchars($row['TITLE']); ?></div>
+
+                        <!-- Dynamically set description -->
+                        <div>Description: <?php echo htmlspecialchars($row['DESCRIPTION']); ?></div>
+
+                        <!-- Add placeholders for other artwork details -->
+                        <div>Size: 25" x 30"</div>
+                        <div>Year: 2023</div>
+                    </div>
+
+                    <div class="artwork-actions">
+                        <!-- Pass dynamic ARTWORK_ID for edit and delete -->
+                        <button class="btn btn-edit" onclick="editArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-delete" onclick="deleteArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
                 </div>
-                <div class="artwork-actions">
-                    <button class="btn btn-edit" onclick="editArtwork(1)">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-delete" onclick="deleteArtwork(1)">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </div>
+                <?php
+            }
+            ?>
 
             <div class="artwork-card">
                 <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
@@ -225,7 +250,7 @@
             <div class="artwork-card">
                 <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
                 <div class="artwork-details">
-                    <div class="artwork-title">Title: "Resting in Peace"</div>
+                    <div class="artwork-title">Title: <?php echo $row["title"] ?></div>
                     <div>Description: Mixed Media: Recycled Plastic Bags & Oil Paint</div>
                     <div>Size: 25" x 30"</div>
                     <div>Year: 2023</div>
@@ -239,6 +264,7 @@
                     </button>
                 </div>
             </div>
+
         </main>
     </div>
 
@@ -251,7 +277,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="artworkForm">
+                    <form id="artworkForm" method="post">
                         <div class="mb-3">
                             <label for="artworkTitle" class="form-label">Artwork Title</label>
                             <input type="text" class="form-control" id="artworkTitle" required>
@@ -291,6 +317,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <form id="editArtworkForm">
                         <input type="hidden" id="editArtworkId">
                         <div class="mb-3">
