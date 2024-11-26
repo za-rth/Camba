@@ -2,6 +2,17 @@
 include 'config.php';
 include 'resources/bootstrap&googleFonts.php';
 session_start();
+if($_SESSION['user_type'] !== "Buyer"){
+  die("Access denied. Only buyers can view this page.");
+}
+
+$sql = "
+    SELECT a.ARTWORK_ID, a.TITLE, a.DESCRIPTION, a.UNITPRICE, a.IMG_NAME, u.FIRSTNAME, u.LASTNAME 
+    FROM artwork_product_info a
+    JOIN user_account u ON a.USER_ID = u.USER_ID
+    WHERE u.USER_TYPE = 'Artist'
+";
+$result = $connection->query($sql);
 
 ?>
 <!DOCTYPE html>
@@ -258,19 +269,21 @@ session_start();
 
       <section class="content-area">
         <article class="post-card">
-          <div class="post-header">
-            <h3 class="post-title">
-              <strong>"Resting in Peace"</strong><br>
-              Mixed Media: Recycled Plastic Bags & Oil Paint<br>
-              Size: 25" x 30"<br>
-              Year: 2023
-            </h3>
-            <div class="post-author">
-              <span class="fw-bold">Xanne</span>
-              <img src="images/a.jpg" alt="Xanne's avatar" class="author-avatar">
-            </div>
-          </div>
-          <img src="images/a2.jpg" alt="Resting in Peace artwork" class="post-image">
+          <?php
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  echo "<div>";
+                  echo "<h3>" . htmlspecialchars($row['TITLE']) . "</h3>";
+                  echo "<p>" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
+                  echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
+                  echo "<p>Seller: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
+                  echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
+                  echo "</div><hr>";
+              }
+          } else {
+              echo "<p>No artworks found from sellers.</p>";
+          }
+          ?>
         </article>
 
         <article class="post-card">
@@ -308,6 +321,9 @@ session_start();
             alt="Resting in Peace artwork" class="post-image">
         </article>
       </section>
+      <?php
+      
+      ?>
       <aside class="right-sidebar">
         <img
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8d72e437a81be21bf193e285c5a35679778860d472733ac1a69c442b7faa2a5?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
