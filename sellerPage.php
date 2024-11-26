@@ -291,7 +291,7 @@ session_start();
                     <li class="nav-item ml-3">
                         <button type="button" class="btn p-3 " 
                             style="border-color:#A021EF; color: #A021EF;" >
-                            <a  href="functions/logOut.php" style="color: #A021EF;"></a>Logout</button>
+                            <a href="functions/logOut.php" style="color: #A021EF;"></a>Logout</button>
                     </li>
                     </li>
                 </ul>
