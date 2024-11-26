@@ -4,7 +4,7 @@ require 'config.php';
 require_once 'functions/login.php';
 require_once 'functions/signUp.php';
 include 'resources/bootstrap&googleFonts.php';
-session_start();
+
 
 ?>
 <!DOCTYPE html>
@@ -266,58 +266,71 @@ session_start();
 
             <form method="post">
 
-              <label for="firstName">firstName:</label>
-              <input type="text" required name="firstname"><br><br>
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstname" required>
+              </div>
 
-              <label for="lastName">lastName:</label>
-              <input type="text" required name="lastname"><br><br>
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastname" required>
+              </div>
 
-              <label for="birthDate">Birth Date:</label>
-              <input type="date" id="birthDate" name="birthDate" required><br><br>
+              <div class="mb-3">
+                <label for="birthDate" class="form-label">Birth Date:</label>
+                <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+              </div>
 
-              <label for="nationality">Nationality:</label>
-              <input type="text" id="nationality" name="nationality" required><br><br>
+              <div class="mb-3">
+                <label class="form-label">Gender:</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male" required>
+                  <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female" required>
+                  <label class="form-check-label" for="genderFemale">Female</label>
+                </div>
+              </div>
 
-              <label for="country">Country:</label>
-              <input type="text" id="country" name="country" required><br><br>
+              <div class="mb-3">
+                <label for="nationality" class="form-label">Nationality:</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" required>
+              </div>
 
-              <label for="state">State:</label>
-              <input type="text" id="state" name="state" required><br><br>
+              <div class="mb-3">
+                <label for="country" class="form-label">Country:</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+              </div>
 
-              <label for="zipCode">ZIP Code:</label>
-              <input type="text" id="zipCode" name="zipCode" required><br><br>
+              <div class="mb-3">
+                <label for="state" class="form-label">State:</label>
+                <input type="text" class="form-control" id="state" name="state" required>
+              </div>
 
-              <label for="gender">Gender:</label>
-              <select class="form-select" aria-label="Default select example" name="gender">
-                <option selected>Choose Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-       
-              </select>
-              
-            
+              <div class="mb-3">
+                <label for="zipCode" class="form-label">ZIP Code:</label>
+                <input type="text" class="form-control" id="zipCode" name="zipCode" required>
+              </div>
 
-              <label for="userType">User Type:</label>
-              <select class="form-select" aria-label="Default select example" name="usertype">
-                <option selected>Select </option>
-                <option value="Buyer">Buyer</option>
-                <option value="Artist">Artist</option>
-       
-              </select>
-              
+              <div class="mb-3">
+                <label for="userType" class="form-label">User Type:</label>
+                <input type="text" class="form-control" id="usertype" name="usertype" required>
+              </div>
 
-              <br><br>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
 
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required><br><br>
+              <div class="mb-3">
+                <label for="passwordKey" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="passwordKey" name="passwordKey" required>
+              </div>
 
-              <label for="passwordKey">Password</label>
-              <input type="password" id="password" name="passwordKey" required><br><br>
+              <button type="submit" name="signup" class="btn btn-primary w-100">Sign Up</button>
 
-              <input type="submit" name="signup" class="btn"
-                style="border-color:#A021EF; background:#FFFFFF; color: #A021EF; " value="Sign Up">
             </form>
-
 
           </div>
           <div class="modal-footer">
