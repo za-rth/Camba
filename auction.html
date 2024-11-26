@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Page</title>
+    <link rel="stylesheet" href="resources/bootsrap.css">
+    <link rel="stylesheet" href="auction-style.css"> <!-- Ensure this matches your filename -->
+    <script>
+        function disableRightClick(event) {
+            event.preventDefault();
+            alert("Right-clicking is disabled on this image.");
+        }
+    </script>
+</head>
+<body>
+    <!-- Top Header with Logo, Title, Search Bar and Icons -->
+    <div class="bg-light-purple p-3 mb-3 d-flex justify-content-between align-items-center shadow-sm" style="background-color: white;">
+        <div class="d-flex align-items-center text-light-purple">
+            <img src="images/CAMBA.png" alt="Logo" class="logo img-fluid" style="width: 50px; height: auto;">
+            <h1 class="ml-2 mb-0">CAMBa</h1>
+            <input type="text" class="form-control rounded ml-3 border-purple" placeholder="Search artist..." aria-label="Search artist" style="width: 250px;">
+        </div>
+        <div>
+            <a href="bidding.html" class="text-white mr-3">
+                <i class="fas fa-gavel"></i> <!-- Auction Icon -->
+            </a>
+            <a href="index.html" class="text-white mr-3">
+                <i class="fas fa-home"></i> <!-- Home Icon -->
+            </a>
+            <a href="cart.html" class="text-white mr-3">
+                <i class="fas fa-shopping-cart"></i> <!-- Cart Icon -->
+            </a>
+            <a href="#" class="text-white">
+                <i class="fas fa-bars"></i> <!-- Hamburger Menu Icon -->
+            </a>
+        </div>
+    </div>
+
+    <!-- Auction Item List -->
+    <div class="container">
+        <div class="auction-item bg-light-purple p-3 rounded mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <div oncontextmenu="disableRightClick(event)">
+                        <img src="images/a1.jpg" class="img-fluid" alt="Arouse A Rose">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h5>Arouse A Rose</h5>
+                    <p>Artist: Xanne</p>
+                    <span class="badge badge-success">ON GOING</span>
+                </div>
+                <div class="col-md-2 text-right">
+                    <a href="bidding.html" class="btn btn-primary">➞</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="auction-item bg-light-purple p-3 rounded mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <div oncontextmenu="disableRightClick(event)">
+                        <img src="link-to-image-2" class="img-fluid" alt="Resting in Peace">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h5>Resting in Peace</h5>
+                    <p>Artist: Xanne</p>
+                    <span class="badge badge-danger">ENDED</span>
+                </div>
+                <div class="col-md-2 text-right">
+                    <span class="text-danger">&#10006;</span> <!-- Error icon for ended auction -->
+                </div>
+            </div>
+        </div>
+
+        <div class="auction-item bg-light-purple p-3 rounded mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <div oncontextmenu="disableRightClick(event)">
+                        <img src="link-to-image-3" class="img-fluid" alt="Sinulog Dance Series">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h5>Sinulog Dance Series</h5>
+                    <p>Artist: Clint Normandia</p>
+                    <span class="badge badge-success">ON GOING</span>
+                </div>
+                <div class="col-md-2 text-right">
+                    <a href="bidding.html" class="btn btn-primary">➞</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

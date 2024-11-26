@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         echo "<script>alert('Please fill in all fields.')</script>";
     } else {
         // Prepare and execute the SQL query
-        $sql = $connection->prepare("SELECT USER_ID,EMAIL,PASSWORD,USER_TYPE FROM  `user_account` WHERE `EMAIL` = ? AND `PASSWORD` = ?");
+        $sql = $connection->prepare("SELECT USER_ID,EMAIL,PASSWORD,USER_TYPE FROM  `user_account` WHERE `EMAIL` = ? AND `PASSWORD` = ? ");
         $sql->bind_param("ss", $email, $password);
         $sql->execute();
         $result = $sql->get_result();
