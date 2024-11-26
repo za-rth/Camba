@@ -14,4 +14,4 @@ if($connection -> connect_error){
     echo "<label hidden>Connection Success</label>";
 }
 
-
+$title = "CAMBA";
