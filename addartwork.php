@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-
+require 'functions/addArtwork.php';
 session_start();
 
 $sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` FROM `artwork_product_info`";
@@ -250,7 +250,7 @@ $all_product = $connection->query($sql);
             <div class="artwork-card">
                 <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
                 <div class="artwork-details">
-                    <div class="artwork-title">Title: <?php echo $row["title"] ?></div>
+                    <div class="artwork-title">Title: "Resting in Peace"</div>
                     <div>Description: Mixed Media: Recycled Plastic Bags & Oil Paint</div>
                     <div>Size: 25" x 30"</div>
                     <div>Year: 2023</div>
@@ -277,32 +277,34 @@ $all_product = $connection->query($sql);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="artworkForm" method="post">
+                    <form id="artworkForm" method="POST">
                         <div class="mb-3">
                             <label for="artworkTitle" class="form-label">Artwork Title</label>
-                            <input type="text" class="form-control" id="artworkTitle" required>
+                            <input type="text" class="form-control" id="artworkTitle" name="ArtTitle" required>
                         </div>
                         <div class="mb-3">
                             <label for="artworkDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="artworkDescription" rows="3" required></textarea>
+                            <textarea class="form-control" id="artworkDescription" rows="3" name="ArtDescription"
+                                required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="artworkSize" class="form-label">Size</label>
-                            <input type="text" class="form-control" id="artworkSize" required>
+                            <label for="artworkSize" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="artworkSize" name="quantity" required>
                         </div>
                         <div class="mb-3">
-                            <label for="artworkYear" class="form-label">Year</label>
-                            <input type="number" class="form-control" id="artworkYear" required>
+                            <label for="artworkYear" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="artworkYear" name="price" step="0.01"
+                                required>
                         </div>
                         <div class="mb-3">
-                            <label for="artworkImage" class="form-label">Upload Image</label>
-                            <input type="file" class="form-control" id="artworkImage" accept="image/*" required>
+                            <label for="artworkImageName" class="form-label">Image Filename</label>
+                            <input type="text" class="form-control" id="artworkImageName" name="imageName"
+                                placeholder="example.jpg" required>
                         </div>
+                        <button type="submit" name="addArtworkForm" class="btn btn-primary">Save Artwork</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="artworkForm" class="btn btn-primary">Save Artwork</button>
                 </div>
             </div>
         </div>
@@ -370,19 +372,19 @@ $all_product = $connection->query($sql);
     </div>
 
     <script>
-        let currentArtworkId = null;
 
-        document.getElementById('artworkForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            saveArtwork(formData);
-        });
+        /*
+    document.getElementById('artworkForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        saveArtwork(formData);
+    });
 
-        document.getElementById('editArtworkForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            updateArtwork(formData);
-        });
+    document.getElementById('editArtworkForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        updateArtwork(formData);
+    });*/
 
         function saveArtwork(formData) {
             const modal = bootstrap.Modal.getInstance(document.getElementById('addArtworkModal'));

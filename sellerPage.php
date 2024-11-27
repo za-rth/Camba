@@ -2,6 +2,15 @@
 include 'config.php';
 include 'resources/bootstrap&googleFonts.php';
 session_start();
+
+$sql = "
+    SELECT a.ARTWORK_ID, a.TITLE, a.DESCRIPTION, a.UNITPRICE, a.IMG_NAME, u.FIRSTNAME, u.LASTNAME 
+    FROM artwork_product_info a
+    JOIN user_account u ON a.USER_ID = u.USER_ID
+    WHERE u.USER_TYPE = 'Artist'
+";
+$result = $connection->query($sql);
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -287,7 +296,7 @@ session_start();
                             style="border-color:#A021EF; background:#A021EF; color: #FFFFFF;">
                             Home</button>
                     </li>
-
+                    <br>
                     <li class="nav-item ml-3">
                         <button type="button" class="btn p-3 " style="border-color:#A021EF; color: #A021EF;">
                             <a href="functions/logOut.php" style="color: #A021EF;">Logout</a></button>
@@ -327,16 +336,16 @@ session_start();
                         <div class="profile-card">
                             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/09712380ac6c57b440e20ebd7c30d5ba5ec17b2bbf6272cc73685c8af38b472c?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
                                 alt="Roxanne Normandia's profile" class="profile-image">
-                            <div class="username"> <?php echo htmlspecialchars($_SESSION["firstname"])?></div>
+                            <div class="username"> <?php echo htmlspecialchars($_SESSION["firstname"]) ?></div>
                             <div class="stats">
-                                <span><?php echo htmlspecialchars($_SESSION["firstname"]),$_SESSION["lastname"]; ?></span>
+                                <span><?php echo htmlspecialchars($_SESSION["firstname"]), $_SESSION["lastname"]; ?></span>
                                 <span aria-label="12.4 thousand followers">12.4K</span>
                             </div>
                             <div class="d-flex justify-content-end px-3">
                                 <button class="follow-btn" aria-label="Follow Xanne">Follow +</button>
                             </div>
                             <address class="text-center mt-3">
-                                
+
                                 <a href="mailto:roxanne.normandia@gmail.com"
                                     class="text-decoration-none text-dark mt-2 d-block">
                                     <?php echo htmlspecialchars($_SESSION["email"]); ?>
@@ -348,19 +357,21 @@ session_start();
                         <div class="row">
                             <div class="col-lg-6">
                                 <article class="artwork-card">
-                                    <h2 class="artwork-title">"Resting in Peace"</h2>
-                                    <div class="artwork-details">
-                                        <p>Mixed Media: Recycled Plastic Bags & Oil Paint<br>
-                                            Size: 25" x 30"<br>
-                                            Year: 2023</p>
-                                    </div>
-                                    <div class="artist-tag mt-3">
-                                        <span>Xanne</span>
-                                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fefb9d068771931f746ee34fbf53df7a5cf178726f6ce68900b95dc461485c81?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                                            alt="" class="artist-avatar" aria-hidden="true">
-                                    </div>
-                                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a67addcbdbd3014a5346263d225823f764ddfbdb21d526511141a9a1cffdef54?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                                        alt="Resting in Peace artwork" class="artwork-image">
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<div>";
+                                            echo "<h3>" . htmlspecialchars($row['TITLE']) . "</h3>";
+                                            echo "<p>" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
+                                            echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
+                                            echo "<p>Seller: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
+                                            echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
+                                            echo "</div><hr>";
+                                        }
+                                    } else {
+                                        echo "<p>No artworks found from sellers.</p>";
+                                    }
+                                    ?>
                                 </article>
                             </div>
 
