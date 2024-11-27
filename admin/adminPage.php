@@ -91,6 +91,9 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
                     <a href="products.html" class="nav-link">Artworks</a>
                     <a href="#" class="nav-link">Subscription</a>
                 </div>
+                <div class="d-flex flex-row">
+                    <a href="../functions/logOut.php" class="nav-link">Logout</a>
+                </div>
             </nav>
 
             <!-- Main Content -->
@@ -139,9 +142,11 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
                                 $number++; 
                             }
                             ?>
-
                         </tbody>
                     </table>
+                </div>
+                <div>
+                    <h3>Total Users: <?php echo count($users); ?></h3>
                 </div>
             </main>
         </div>
