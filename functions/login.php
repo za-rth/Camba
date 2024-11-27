@@ -40,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 header("Location: buyerPage.php");
             } elseif ($userType === 'Artist') {
                 header("Location: sellerPage.php");
+            } elseif ($userType === 'Admin') {
+                header("Location: admin/adminPage.php");
             } else {
                 echo "<script>alert('Invalid user type!')</script>";
             }

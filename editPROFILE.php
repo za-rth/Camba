@@ -1,7 +1,73 @@
 <?php
+include 'config.php';
+session_start();
+
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Get the user ID from the session
+$user_id = $_SESSION['user_id'];
+
+// Fetch the user's current profile data
+$sql = "SELECT UPR.REGISTER_ID 
+FROM USER_ACCOUNT UA 
+JOIN USER_PROFILE_REGISTRATION UPR ON UA.FK_REGISTER_ID = UPR.REGISTER_ID 
+WHERE UA.USER_ID = ?";
+$stmt = $connection->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    echo "User not found.";
+    exit();
+}
+
+// Handle form submission for updating profile
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
+    // Sanitize and validate the input data
+    $firstname = htmlspecialchars($_POST['firstname']);
+    $lastname = htmlspecialchars($_POST['lastname']);
+    $birthdate = $_POST['birthdate'];
+    $nationality = htmlspecialchars($_POST['nationality']);
+    $country = htmlspecialchars($_POST['country']);
+    $state = htmlspecialchars($_POST['state']);
+    $zip_code = (int) $_POST['zip_code'];
+    $complete_address = htmlspecialchars($_POST['complete_address']);
+    $gender = htmlspecialchars($_POST['gender']);
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $passphrase = $_POST['passphrase'];
+
+    // Check if a new password is provided, if so, hash it
+    if (!empty($passphrase)) {
+        $hashed_password = password_hash($passphrase, PASSWORD_BCRYPT);
+    } else {
+        // If no new password, keep the existing one
+        $hashed_password = $user['PASSPHRASE'];
+    }
+
+    // Update the user's data in the database
+    $sql = "UPDATE user_profile_registration SET FIRSTNAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, COUNTRY = ?, STATE = ?, ZIP_CODE = ?, COMPLETE_ADDRESS = ?, GENDER = ?, EMAIL = ?, PASSPHRASE = ? WHERE USER_ID = ?";
+    $stmt = $connection->prepare($sql);
+    $stmt->bind_param("ssssssissssi", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zip_code, $complete_address, $gender, $email, $hashed_password, $user_id);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Profile updated successfully!');</script>";
+        // Optionally, redirect to a success page or refresh
+        header("Location: editProfile.php");
+        exit();
+    } else {
+        echo "<script>alert('Error updating profile: " . $stmt->error . "');</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +112,7 @@
             border-radius: 5px;
             border: 2px solid var(--text-color);
         }
-        
+
         .profile-section {
             background-color: var(--primary-color);
             border-radius: 10px;
@@ -163,12 +229,15 @@
             .header {
                 padding-right: 20px;
             }
+
             .profile-section {
                 padding: 38px 20px 63px;
             }
+
             .profile-header {
                 flex-direction: column;
             }
+
             .btn-save,
             .btn-delete,
             .btn-change-password {
@@ -184,183 +253,141 @@
         <header class="header d-flex justify-content-between align-items-center">
             <img src="images/CAMBA.png" alt="Company Logo" class="logo">
             <nav class="d-flex align-items-center">
-                <a href="#" class="nav-link">Home</a>
+                <a href="buyerPage.php" class="nav-link">Home</a>
                 <a href="#" class="nav-link">View Gallery</a>
                 <a href="#" class="nav-link">View Cart</a>
                 <a href="#" class="nav-link" onclick="handleLogout()">Logout</a>
             </nav>
         </header>
-        
+
         <main class="main-container">
-        <div class="profile-section">
-            <div class="profile-header">
-                <div class="profile-image-section">
-                    <img src="images/Onin.jpg" alt="Profile" class="profile-image">
-                    <button class="change-picture-btn" onclick="handleChangePicture()">Change Picture</button>
-                    <input type="file" id="changePictureInput" accept="image/*" style="display: none;" onchange="handlePictureChange(event)">
-                </div><br><br><br>
-                <div class="profile-info">
-                    <h1 class="mb-5">Edit Profile</h1>
-                    <div class="mb-4">
-                        <label class="form-label">User ID</label>
-                        <div class="d-flex gap-4">
-                            <input type="text" class="form-control" value="1003" readonly>
-                            <button class="btn btn-save" onclick="handleSaveChanges()">Save Changes</button>
+            <h1 class="mb-5">Edit Profile</h1>
+            <form action="editProfile.php" method="POST">
+                <div class="mb-4">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" name="firstname"
+                        value="<?php echo htmlspecialchars($user['FIRSTNAME']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="lastname"
+                        value="<?php echo htmlspecialchars($user['LASTNAME']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Birthdate</label>
+                    <input type="date" class="form-control" name="birthdate"
+                        value="<?php echo htmlspecialchars($user['BIRTHDATE']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Nationality</label>
+                    <input type="text" class="form-control" name="nationality"
+                        value="<?php echo htmlspecialchars($user['NATIONALITY']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Country</label>
+                    <input type="text" class="form-control" name="country"
+                        value="<?php echo htmlspecialchars($user['COUNTRY']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">State</label>
+                    <input type="text" class="form-control" name="state"
+                        value="<?php echo htmlspecialchars($user['STATE']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">ZIP Code</label>
+                    <input type="text" class="form-control" name="zip_code"
+                        value="<?php echo htmlspecialchars($user['ZIP_CODE']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Complete Address</label>
+                    <input type="text" class="form-control" name="complete_address"
+                        value="<?php echo htmlspecialchars($user['COMPLETE_ADDRESS']); ?>">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Gender</label>
+                    <select class="form-control" name="gender" required>
+                        <option value="Male" <?php echo ($user['GENDER'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                        <option value="Female" <?php echo ($user['GENDER'] == 'Female') ? 'selected' : ''; ?>>Female
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email"
+                        value="<?php echo htmlspecialchars($user['EMAIL']); ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="passphrase" required>
+                </div>
+                <button type="submit" name="update_profile" class="btn btn-save">Save Changes</button>
+            </form>
+        </main>
+        <footer class="footer">
+            <p>© All right Reversed. CAMBa</p>
+        </footer>
+
+        <div class="modal fade" id="saveConfirmModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content modal-save">
+                    <div class="modal-body text-center p-5">
+                        <img src="images/CAMBA.jpg" alt="Confirm" class="mb-4" width="145">
+                        <h3 class="mb-5">Are you sure you want to save?</h3>
+                        <div class="d-flex gap-4 justify-content-center">
+                            <button class="btn" onclick="handleConfirmSave()">Yes</button>
+                            <button class="btn" data-bs-dismiss="modal">No</button>
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label required-field">Name</label>
-                        <div class="d-flex gap-4">
-                            <input type="text" class="form-control" value="">
-                            <button class="btn btn-delete" onclick="handleDeleteAccount()">Delete Account</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row g-4 mb-4">
-                <div class="col-md-4">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" value="">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label required-field">Phone Number</label>
-                    <input type="tel" class="form-control" value="">
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Home Phone Number</label>
-                    <input type="tel" class="form-control">
-                </div>
-            </div>
-
-            <div class="row g-4 mb-4">
-                <div class="col-md-8">
-                    <label class="form-label required-field">Address</label>
-                    <input type="text" class="form-control" value="">
-
-                    <div class="row g-4 mt-3">
-                        <div class="col-md-6">
-                            <label class="form-label required-field">State</label>
-                            <input type="text" class="form-control" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label required-field">Postcode</label>
-                            <input type="text" class="form-control" value="">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label required-field">City</label>
-                    <input type="text" class="form-control" value="">
-                    
-                    <label class="form-label required-field mt-3">Country</label>
-                    <input type="text" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <label class="form-label required-field">Birthday</label>
-                    <input type="text" class="form-control" value="">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Account Creation Date</label>
-                    <input type="text" class="form-control" readonly>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Account Type</label>
-                    <input type="text" class="form-control" readonly>
-                </div>
-            </div>
-
-            <p class="text-danger mt-4">Required Fields*</p>
-
-            <div class="change-password-section">
-                <div class="row g-4">
-                <div class="col-md-4">
-                        <label class="form-label">Current Password</label>
-                        <input type="password" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">New Password</label>
-                        <input type="password" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Confirm New Password</label>
-                        <input type="password" class="form-control">
-                    </div>
-                </div>
-                <button class="btn btn-change-password" onclick="handleChangePassword()">Change Password</button>
-            </div>
-        </div>
-    </main>
-    <footer class="footer">
-        <p>© All right Reversed. CAMBa</p>
-    </footer>
-    
-    <div class="modal fade" id="saveConfirmModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-save">
-                <div class="modal-body text-center p-5">
-                    <img src="images/CAMBA.jpg" alt="Confirm" class="mb-4" width="145">
-                    <h3 class="mb-5">Are you sure you want to save?</h3>
-                    <div class="d-flex gap-4 justify-content-center">
-                        <button class="btn" onclick="handleConfirmSave()">Yes</button>
-                        <button class="btn" data-bs-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function handleLogout() {
-            alert('Logout clicked!');
-            // Add logic for logout here
-        }
-
-        function handleSaveChanges() {
-            let saveConfirmModal = new bootstrap.Modal(document.getElementById('saveConfirmModal'));
-            saveConfirmModal.show();
-        }
-
-        function handleDeleteAccount() {
-            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                alert('Account deleted successfully!');
-                // Add logic for deleting account here
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function handleLogout() {
+                alert('Logout clicked!');
+                // Add logic for logout here
             }
-        }
 
-        function handleChangePassword() {
-            alert('Password changed successfully!');
-            // Add logic for changing password here
-        }
-
-        function handleConfirmSave() {
-            alert('Profile saved successfully!');
-            let saveConfirmModal = bootstrap.Modal.getInstance(document.getElementById('saveConfirmModal'));
-            saveConfirmModal.hide();
-            // Add logic for saving changes here
-        }
-
-        function handleChangePicture() {
-            document.getElementById('changePictureInput').click();
-        }
-
-        function handlePictureChange(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.profile-image').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            function handleSaveChanges() {
+                let saveConfirmModal = new bootstrap.Modal(document.getElementById('saveConfirmModal'));
+                saveConfirmModal.show();
             }
-        }
-    </script>
+
+            function handleDeleteAccount() {
+                if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                    alert('Account deleted successfully!');
+                    // Add logic for deleting account here
+                }
+            }
+
+            function handleChangePassword() {
+                alert('Password changed successfully!');
+                // Add logic for changing password here
+            }
+
+            function handleConfirmSave() {
+                alert('Profile saved successfully!');
+                let saveConfirmModal = bootstrap.Modal.getInstance(document.getElementById('saveConfirmModal'));
+                saveConfirmModal.hide();
+                // Add logic for saving changes here
+            }
+
+            function handleChangePicture() {
+                document.getElementById('changePictureInput').click();
+            }
+
+            function handlePictureChange(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.querySelector('.profile-image').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
 </body>
-</html>
 
+</html>
