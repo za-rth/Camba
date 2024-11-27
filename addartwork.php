@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 require 'functions/addArtwork.php';
-session_start();
+
 
 $sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` FROM `artwork_product_info`";
 $all_product = $connection->query($sql);
@@ -277,7 +277,7 @@ $all_product = $connection->query($sql);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="artworkForm" method="POST">
+                    <form id="artworkForm" method="POST" action="addArtwork.php" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="artworkTitle" class="form-label">Artwork Title</label>
                             <input type="text" class="form-control" id="artworkTitle" name="ArtTitle" required>
@@ -297,15 +297,13 @@ $all_product = $connection->query($sql);
                                 required>
                         </div>
                         <div class="mb-3">
-                            <label for="artworkImageName" class="form-label">Image Filename</label>
-                            <input type="text" class="form-control" id="artworkImageName" name="imageName"
-                                placeholder="example.jpg" required>
+                            <label for="artworkImageName" class="form-label">Artwork Image</label>
+                            <input type="file" class="form-control" id="artworkImageName" name="imageName" required>
                         </div>
                         <button type="submit" name="addArtworkForm" class="btn btn-primary">Save Artwork</button>
                     </form>
                 </div>
-                <div class="modal-footer">
-                </div>
+                <div class="modal-footer"></div>
             </div>
         </div>
     </div>
