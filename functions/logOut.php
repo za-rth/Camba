@@ -1,38 +1,25 @@
 <?php
-include dirname(__DIR__) . '/config.php';
-
-/*session_start();
-if (!isset($_SESSION['user_id'])) {
-    // Redirect to the login page
-    echo "<script>alert('Are you sure you want to logout.')</script>";
-    header('Location: login.php');
-    exit();
-}
-session_abort();
-session_destroy();
-exit;
-*/
+include 'config.php';
 
 session_start();
 
-$USER_ID = $_GET['USER_ID'];
+// Check if there is an active session
 if (!isset($_SESSION['USER_ID'])) {
-    // Redirect to the login page if no active session
-    echo "<script>alert('Are you sure you want to logout.')</script>";
-    header('Location: ../index.php');
+    // If no active session, redirect to login page
+    header('Location: ../');
     exit();
 }
-
-// Optional confirmation alert
-echo "<script>alert('You have been logged out.');</script>";
 
 // Clear session variables
 $_SESSION = [];
 
-// Destroy the session
+// Destroy the session completely
 session_unset();
 session_destroy();
 
-// Redirect to the login page
-header('Location: ../index.php');
+// Redirect to the login page with a confirmation alert
+echo "<script>
+        alert('You have been logged out.');
+        window.location.href='../';
+      </script>";
 exit();

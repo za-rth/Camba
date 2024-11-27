@@ -1,13 +1,7 @@
 <?php
 include 'config.php';
 require 'functions/addArtwork.php';
-
-
-$sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` FROM `artwork_product_info`";
-$all_product = $connection->query($sql);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -192,80 +186,72 @@ $all_product = $connection->query($sql);
             <button type="button" class="add-artwork-btn" data-bs-toggle="modal" data-bs-target="#addArtworkModal">
                 Add New Artwork +
             </button>
-
             <h2 class="section-title">Your Existing Artworks</h2>
             <?php
-            while ($row = $all_product->fetch_assoc()) {
-                ?>
-                <div class="artwork-card">
-                    <!-- Dynamically set the image source -->
-                    <img src="images/<?php echo htmlspecialchars($row['IMG_NAME']); ?>"
-                        alt="<?php echo htmlspecialchars($row['TITLE']); ?>" class="artwork-image">
 
-                    <div class="artwork-details">
-                        <!-- Display artwork title -->
-                        <div class="artwork-title">Title: <?php echo htmlspecialchars($row['TITLE']); ?></div>
+            // Check if user_id is set in the session
+            if (isset($_SESSION['user_id'])) {
+                $user_id = $_SESSION['user_id'];
 
-                        <!-- Dynamically set description -->
-                        <div>Description: <?php echo htmlspecialchars($row['DESCRIPTION']); ?></div>
+                // Query to select only artworks from the logged-in user
+                $sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` 
+            FROM `artwork_product_info`
+            WHERE `USER_ID` = ?";
 
-                        <!-- Add placeholders for other artwork details -->
-                        <div>Size: 25" x 30"</div>
-                        <div>Year: 2023</div>
+                // Prepare the statement to avoid SQL injection
+                $stmt = $connection->prepare($sql);
+                $stmt->bind_param("i", $user_id); // Bind the user_id
+                $stmt->execute();
+                $all_product = $stmt->get_result(); // Get the result of the query
+            
+                // HTML to display the artworks
+                while ($row = $all_product->fetch_assoc()) {
+                    ?>
+
+
+
+
+                    <div class="artwork-card">
+                        <!-- Dynamically set the image source -->
+                        <img src="uploads/<?php echo htmlspecialchars($row['IMG_NAME']); ?>"
+                            alt="<?php echo htmlspecialchars($row['TITLE']); ?>" class="artwork-image">
+
+                        <div class="artwork-details">
+                            <!-- Display artwork title -->
+                            <div class="artwork-title">Title: <?php echo htmlspecialchars($row['TITLE']); ?></div>
+
+                            <!-- Dynamically set description -->
+                            <div>Description: <?php echo htmlspecialchars($row['DESCRIPTION']); ?></div>
+
+                            <!-- Add placeholders for other artwork details -->
+                            <div>Quantity: <?php echo htmlspecialchars($row['QTYONHAND']); ?></div>
+                            <div>Price: $<?php echo htmlspecialchars($row['UNITPRICE']); ?></div>
+                            <div>Last Updated: <?php echo htmlspecialchars($row['LAST_UPDATE']); ?></div>
+                        </div>
+
+                        <div class="artwork-actions">
+                            <!-- Pass dynamic ARTWORK_ID for edit and delete -->
+                            <button class="btn btn-edit" onclick="editArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-delete" onclick="deleteArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
                     </div>
+                    <?php
+                }
 
-                    <div class="artwork-actions">
-                        <!-- Pass dynamic ARTWORK_ID for edit and delete -->
-                        <button class="btn btn-edit" onclick="editArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="btn btn-delete" onclick="deleteArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </div>
-                </div>
-                <?php
+                $stmt->close(); // Close the prepared statement
+            } else {
+                echo "<p>User not logged in. Please log in to view your artworks.</p>";
             }
+
             ?>
 
-            <div class="artwork-card">
-                <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
-                <div class="artwork-details">
-                    <div class="artwork-title">Title: "Resting in Peace"</div>
-                    <div>Description: Mixed Media: Recycled Plastic Bags & Oil Paint</div>
-                    <div>Size: 25" x 30"</div>
-                    <div>Year: 2023</div>
-                </div>
-                <div class="artwork-actions">
-                    <button class="btn btn-edit" onclick="editArtwork(2)">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-delete" onclick="deleteArtwork(2)">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </div>
-
-
-            <div class="artwork-card">
-                <img src="images/a2.jpg" alt="Resting in Peace Artwork" class="artwork-image">
-                <div class="artwork-details">
-                    <div class="artwork-title">Title: "Resting in Peace"</div>
-                    <div>Description: Mixed Media: Recycled Plastic Bags & Oil Paint</div>
-                    <div>Size: 25" x 30"</div>
-                    <div>Year: 2023</div>
-                </div>
-                <div class="artwork-actions">
-                    <button class="btn btn-edit" onclick="editArtwork(4)">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-delete" onclick="deleteArtwork(4)">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </div>
-
         </main>
+
+
     </div>
 
     <div class="modal fade" id="addArtworkModal" tabindex="-1" aria-labelledby="addArtworkModalLabel"

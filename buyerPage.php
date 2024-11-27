@@ -2,7 +2,7 @@
 include 'config.php';
 include 'resources/bootstrap&googleFonts.php';
 session_start();
-if($_SESSION['user_type'] !== "Buyer"){
+if ($_SESSION['user_type'] !== "Buyer") {
   die("Access denied. Only buyers can view this page.");
 }
 
@@ -220,9 +220,9 @@ $result = $connection->query($sql);
     </header>
 
     <div class="search-container">
-      <form role="search">
+      <form id="searchForm" role="search">
         <label for="search" class="visually-hidden">Search</label>
-        <input type="search" id="search" class="search-input form-control" placeholder="Search here...">
+        <input type="search" id="search" class="search-input form-control" placeholder="Search for an artist here...">
       </form>
     </div>
 
@@ -270,18 +270,20 @@ $result = $connection->query($sql);
       <section class="content-area">
         <article class="post-card">
           <?php
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  echo "<div>";
-                  echo "<h3>" . htmlspecialchars($row['TITLE']) . "</h3>";
-                  echo "<p>" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
-                  echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
-                  echo "<p>Seller: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
-                  echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
-                  echo "</div><hr>";
-              }
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+              echo "<div>";
+              echo "<h3 style='text-align:center; font-weight:bold;'>" . htmlspecialchars($row['TITLE']) . "</h3>";
+              echo "<button class='btn btn-primary'  onclick='addToCart(" . $row['ARTWORK_ID'] . ")' style='margin-top: 10px; float:right;'><i class='fas fa-cart-plus'></i> Add to Cart</button>";
+              echo "<button class='btn btn-primary'  onclick='addToCart(" . $row['ARTWORK_ID'] . ")' style='margin-top: 10px; float:right;'><i class='fas fa-cart-plus'></i> Order Now</button>";
+              echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
+              echo "<p >" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
+              echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
+              echo "<p>Seller: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
+              echo "</div><hr>";
+            }
           } else {
-              echo "<p>No artworks found from sellers.</p>";
+            echo "<p>No artworks found from sellers.</p>";
           }
           ?>
         </article>
@@ -322,7 +324,7 @@ $result = $connection->query($sql);
         </article>
       </section>
       <?php
-      
+
       ?>
       <aside class="right-sidebar">
         <img
@@ -333,5 +335,31 @@ $result = $connection->query($sql);
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+  // JavaScript function to handle adding items to the cart
+  function addToCart(artworkId) {
+    alert("Artwork with ID " + artworkId + " has been added to the cart.");
+  }
+
+  // JavaScript function to handle ordering items
+  function orderNow(artworkId) {
+    alert("You are ordering artwork with ID " + artworkId + ".");
+  }
+
+  // JavaScript function to highlight artist's artwork based on search input
+  document.getElementById('search').addEventListener('input', function () {
+    const searchValue = this.value.toLowerCase();
+    const artworks = document.querySelectorAll('.post-card');
+
+    artworks.forEach(artwork => {
+      const artistName = artwork.dataset.artist.toLowerCase();
+      if (artistName.includes(searchValue) && searchValue.length > 0) {
+        artwork.classList.add('highlight');
+      } else {
+        artwork.classList.remove('highlight');
+      }
+    });
+  });
+</script>
 
 </html>

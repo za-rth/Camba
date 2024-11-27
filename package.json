@@ -1,0 +1,12 @@
+{
+  "name": "camba",
+  "version": "1.0.0",
+  "description": "PLEASE READ THIS CAREFULLY\r *\r *\r *\r Prerequisites: cambawebsite database\r *\r *\r *",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
