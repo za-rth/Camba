@@ -3,6 +3,7 @@ include 'config.php';
 require 'functions/addArtwork.php';
 require 'functions/deleteArtwork.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

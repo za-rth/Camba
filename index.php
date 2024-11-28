@@ -235,7 +235,7 @@ include 'resources/bootstrap&googleFonts.php';
           <div class="modal-body">
             <form method="post" action="">
               <input class="p-2 mb-2 container rounded-2" name="email" type="text" style="border-color:#A021EF;"
-                placeholder="USERNAME"> <br>
+                placeholder="EMAIL"> <br>
               <input class="p-2 container rounded-2" type="password" name="password" style="border-color:#A021EF;"
                 placeholder="PASSWORD">
               <br><br>

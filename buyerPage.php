@@ -242,7 +242,7 @@ $result = $connection->query($sql);
           <div class="nav-item">
             <img src="images/L1.jpg" alt="" class="nav-icon">
             <a
-                href="editPROFILE.php">Profile</a>
+                href="editProfile.php">Profile</a>
           </div>
           <div class="nav-item">
             <img src="images/L2.jpg" alt="" class="nav-icon">

@@ -257,10 +257,11 @@ if (isset($_SESSION['user_id'])) {
                     width: 70px;
                     top: -2rem;
                 }
+
                 .highlight {
-                background-color: yellow;
-                transition: background-color 0.3s ease;
-             }
+                    background-color: yellow;
+                    transition: background-color 0.3s ease;
+                }
 
                 .profile-image {
                     width: 120px;
@@ -338,7 +339,6 @@ if (isset($_SESSION['user_id'])) {
                             <button class="manage-gallery-btn" aria-label="Manage Gallery" style="color: #A021EF;"><a
                                     style="p-5" href="addartwork.php">Manage
                                     Gallery</a></button>
-
                         </div>
                     </div>
                 </div>
@@ -396,19 +396,10 @@ if (isset($_SESSION['user_id'])) {
 
                             <div class="col-lg-6">
                                 <article class="artwork-card">
-                                    <h2 class="artwork-title">"Makabagong Filipina"</h2>
-                                    <div class="artwork-details">
-                                        <p>Mixed Media: Recycled Plastic Bags & Oil Paint<br>
-                                            Size: 40" x 30"<br>
-                                            Year: 2023</p>
-                                    </div>
-                                    <div class="artist-tag mt-3">
-                                        <span>Xanne</span>
-                                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/98e8b29755f5225abee9a3c08d49789ce2f0284e21802cb2006d77271592e1fc?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                                            alt="" class="artist-avatar" aria-hidden="true">
-                                    </div>
-                                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c380ae4db3eca73384ab931942ca8dc136136f8c32220fdf59ad8c34c98b27d7?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                                        alt="Makabagong Filipina artwork" class="artwork-image">
+                                    <aside class="right-sidebar">
+                                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8d72e437a81be21bf193e285c5a35679778860d472733ac1a69c442b7faa2a5?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
+                                            alt="Additional content" class="img-fluid">
+                                    </aside>
                                 </article>
                             </div>
                         </div>

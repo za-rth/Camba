@@ -85,7 +85,7 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
             <!-- Sidebar -->
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="d-flex flex-column">
-                    <h1 class="mb-4">CAMBa</h1>
+                    <h1 class="mb-4">CAMBa Admin</h1>
 
                     <a href="adminPage.php" class="nav-link">Users</a>
                     <a href="products.html" class="nav-link">Artworks</a>
