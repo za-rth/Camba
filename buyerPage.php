@@ -337,6 +337,14 @@ $result = $connection->query($sql);
   function addToCart(artworkId) {
     alert("Artwork with ID " + artworkId + " has been added to the cart.");
   }
+  // JavaScript function to handle ordering items
+  function orderNow(artworkId, title, description, price, imgName) {
+      // Construct the URL with query parameters
+      const url = `order.php?artworkId=${artworkId}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&price=${encodeURIComponent(price)}&imgName=${encodeURIComponent(imgName)}`;
+      
+      // Redirect to the order page
+      window.location.href = url;
+  }
 
   // JavaScript function to handle ordering items
   /*function orderNow(artworkId) {

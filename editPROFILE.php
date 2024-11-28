@@ -1,6 +1,7 @@
 <?php
-include 'config.php';
+
 include 'functions/deleteUser.php';
+include 'config.php';
 
 
 // Ensure the user is logged in
@@ -13,8 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch the user's current profile data
-$sql = "SELECT UPR.* 
-        FROM USER_ACCOUNT UA 
+$sql = "SELECT UPR.* FROM USER_ACCOUNT UA 
         JOIN USER_PROFILE_REGISTRATION UPR ON UA.FK_REGISTER_ID = UPR.REGISTER_ID 
         WHERE UA.USER_ID = ?";
 $stmt = $connection->prepare($sql);
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $nationality = htmlspecialchars($_POST['nationality']);
     $country = htmlspecialchars($_POST['country']);
     $state = htmlspecialchars($_POST['state']);
-    $zip_code = (int)$_POST['zip_code'];
+    $zip_code = (int) $_POST['zip_code'];
     $complete_address = htmlspecialchars($_POST['complete_address']);
     $gender = htmlspecialchars($_POST['gender']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -64,7 +64,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     } else {
         echo "<script>alert('Error updating profile: " . $stmt->error . "');</script>";
     }
+
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
+    // Start a transaction to ensure all related data is deleted correctly
+    $connection->begin_transaction();
+
+    try {
+        // Delete the user's profile and account from the database
+        $delete_profile_sql = "DELETE FROM user_profile_registration WHERE REGISTER_ID = ?";
+        $delete_account_sql = "DELETE FROM user_account WHERE USER_ID = ?";
+
+        $delete_profile_stmt = $connection->prepare($delete_profile_sql);
+        $delete_profile_stmt->bind_param("i", $user['REGISTER_ID']);
+        $delete_account_stmt = $connection->prepare($delete_account_sql);
+        $delete_account_stmt->bind_param("i", $user_id);
+
+        // Execute the deletion queries
+        if ($delete_profile_stmt->execute() && $delete_account_stmt->execute()) {
+            // Commit the transaction after successful deletion
+            $connection->commit();
+            echo "<script>alert('Account deleted successfully.');</script>";
+            // Redirect to the homepage or logout after successful deletion
+            header("Location: index.php");
+            exit();
+        } else {
+            // Rollback the transaction if any delete fails
+            $connection->rollback();
+            echo "<script>alert('Error deleting account. Please try again.');</script>";
+        }
+
+        $delete_profile_stmt->close();
+        $delete_account_stmt->close();
+    } catch (Exception $e) {
+        // Rollback transaction if any exception occurs
+        $connection->rollback();
+        echo "<script>alert('An error occurred: " . $e->getMessage() . "');</script>";
+    }
+
+    $connection->close();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <title>CAMBA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -324,10 +365,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
                     <input type="password" class="form-control" name="passphrase">
                 </div>
                 <button type="submit" name="update_profile" class="btn btn-save">Save Changes</button>
+
             </form>
-            <form action="deleteUser.php" method="POST">
-            <button type="submit" name="update_profile" class="btn btn-danger">DELETE ACCOUNT</button>
+            <form action="" method="POST">
+                <button type="submit" name="delete_account" class="btn btn-danger">Delete Account</button>
             </form>
+
+
         </main>
         <footer class="footer">
             <p>© All right Reversed. CAMBa</p>

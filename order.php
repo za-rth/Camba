@@ -1,5 +1,5 @@
 <?php
-   include 'config.php';
+include 'config.php';
 
 // Retrieve artwork details from URL parameters
 $artworkId = isset($_GET['artworkId']) ? $_GET['artworkId'] : '';
