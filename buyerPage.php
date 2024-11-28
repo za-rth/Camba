@@ -229,7 +229,7 @@ $result = $connection->query($sql);
     <main class="main-content">
       <aside class="sidebar">
         <div class="profile-section">
-          <img src="images/a.jpg" alt="User Profile" class="profile-image">
+          <img src="images/a.jpg" alt="User Profile" class="profile-image" >
           <div>
             <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["firstname"]); ?></h3>
             <h3 class="h6 fw-bold mb-1"><?php echo htmlspecialchars($_SESSION["lastname"]); ?></h3>
@@ -241,8 +241,8 @@ $result = $connection->query($sql);
         <nav aria-label="Side navigation">
           <div class="nav-item">
             <img src="images/L1.jpg" alt="" class="nav-icon">
-            <button class="btn btn-link text-dark  text-decoration-none fs-4"><a
-                href="editPROFILE.php">Profile</a></button>
+            <a
+                href="editPROFILE.php">Profile</a>
           </div>
           <div class="nav-item">
             <img src="images/L2.jpg" alt="" class="nav-icon">
@@ -250,7 +250,7 @@ $result = $connection->query($sql);
           </div>
           <div class="nav-item">
             <img src="images/L4.jpg" alt="" class="nav-icon">
-            <span>Auction</span>
+            <a href="auction.php">Auction</a>
           </div>
           <div class="nav-item">
             <img src="images/L3.jpg" alt="" class="nav-icon">

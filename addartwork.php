@@ -287,6 +287,7 @@ require 'functions/addArtwork.php';
                             <input type="file" class="form-control" id="artworkImageName" name="imageName" required>
                         </div>
                         <button type="submit" name="addArtworkForm" class="btn btn-primary">Save Artwork</button>
+                        <button type="submit" style=" background:#A021EF; color: #FFFFFF;"name="addArtworkForm" class="btn ">Add to Auction</button>
                     </form>
                 </div>
                 <div class="modal-footer"></div>

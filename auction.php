@@ -1,4 +1,5 @@
 <?php
+include 'functions/addArtwork.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

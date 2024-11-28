@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'functions/deleteUser.php';
 session_start();
 
 // Ensure the user is logged in
@@ -12,10 +13,10 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch the user's current profile data
-$sql = "SELECT UPR.REGISTER_ID 
-FROM USER_ACCOUNT UA 
-JOIN USER_PROFILE_REGISTRATION UPR ON UA.FK_REGISTER_ID = UPR.REGISTER_ID 
-WHERE UA.USER_ID = ?";
+$sql = "SELECT UPR.* 
+        FROM USER_ACCOUNT UA 
+        JOIN USER_PROFILE_REGISTRATION UPR ON UA.FK_REGISTER_ID = UPR.REGISTER_ID 
+        WHERE UA.USER_ID = ?";
 $stmt = $connection->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $nationality = htmlspecialchars($_POST['nationality']);
     $country = htmlspecialchars($_POST['country']);
     $state = htmlspecialchars($_POST['state']);
-    $zip_code = (int) $_POST['zip_code'];
+    $zip_code = (int)$_POST['zip_code'];
     $complete_address = htmlspecialchars($_POST['complete_address']);
     $gender = htmlspecialchars($_POST['gender']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -44,16 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
 
     // Check if a new password is provided, if so, hash it
     if (!empty($passphrase)) {
-        $hashed_password = password_hash($passphrase, PASSWORD_BCRYPT);
+        $new_password = $passphrase;
     } else {
         // If no new password, keep the existing one
         $hashed_password = $user['PASSPHRASE'];
     }
 
     // Update the user's data in the database
-    $sql = "UPDATE user_profile_registration SET FIRSTNAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, COUNTRY = ?, STATE = ?, ZIP_CODE = ?, COMPLETE_ADDRESS = ?, GENDER = ?, EMAIL = ?, PASSPHRASE = ? WHERE USER_ID = ?";
+    $sql = "UPDATE user_profile_registration SET FIRSTNAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, COUNTRY = ?, STATE = ?, ZIP_CODE = ?, COMPLETE_ADDRESS = ?, GENDER = ?, EMAIL = ?, PASSPHRASE = ? WHERE REGISTER_ID = ?";
     $stmt = $connection->prepare($sql);
-    $stmt->bind_param("ssssssissssi", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zip_code, $complete_address, $gender, $email, $hashed_password, $user_id);
+    $stmt->bind_param("ssssssissssi", $firstname, $lastname, $birthdate, $nationality, $country, $state, $zip_code, $complete_address, $gender, $email, $new_password, $user['REGISTER_ID']);
 
     if ($stmt->execute()) {
         echo "<script>alert('Profile updated successfully!');</script>";
@@ -64,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
         echo "<script>alert('Error updating profile: " . $stmt->error . "');</script>";
     }
 }
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -262,65 +264,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
 
         <main class="main-container">
             <h1 class="mb-5">Edit Profile</h1>
-            <form action="editProfile.php" method="POST">
+            <form action="" method="POST">
                 <div class="mb-4">
                     <label class="form-label">First Name</label>
                     <input type="text" class="form-control" name="firstname"
-                        value="<?php echo htmlspecialchars($user['FIRSTNAME']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['FIRSTNAME'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Last Name</label>
                     <input type="text" class="form-control" name="lastname"
-                        value="<?php echo htmlspecialchars($user['LASTNAME']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['LASTNAME'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Birthdate</label>
                     <input type="date" class="form-control" name="birthdate"
-                        value="<?php echo htmlspecialchars($user['BIRTHDATE']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['BIRTHDATE'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Nationality</label>
                     <input type="text" class="form-control" name="nationality"
-                        value="<?php echo htmlspecialchars($user['NATIONALITY']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['NATIONALITY'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Country</label>
                     <input type="text" class="form-control" name="country"
-                        value="<?php echo htmlspecialchars($user['COUNTRY']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['COUNTRY'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">State</label>
                     <input type="text" class="form-control" name="state"
-                        value="<?php echo htmlspecialchars($user['STATE']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['STATE'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">ZIP Code</label>
                     <input type="text" class="form-control" name="zip_code"
-                        value="<?php echo htmlspecialchars($user['ZIP_CODE']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['ZIP_CODE'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Complete Address</label>
                     <input type="text" class="form-control" name="complete_address"
-                        value="<?php echo htmlspecialchars($user['COMPLETE_ADDRESS']); ?>">
+                        value="<?php echo htmlspecialchars($user['COMPLETE_ADDRESS'] ?? ''); ?>">
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Gender</label>
                     <select class="form-control" name="gender" required>
-                        <option value="Male" <?php echo ($user['GENDER'] == 'Male') ? 'selected' : ''; ?>>Male</option>
-                        <option value="Female" <?php echo ($user['GENDER'] == 'Female') ? 'selected' : ''; ?>>Female
+                        <option value="Male" <?php echo ($user['GENDER'] ?? '') == 'Male' ? 'selected' : ''; ?>>Male
                         </option>
+                        <option value="Female" <?php echo ($user['GENDER'] ?? '') == 'Female' ? 'selected' : ''; ?>>
+                            Female</option>
                     </select>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email"
-                        value="<?php echo htmlspecialchars($user['EMAIL']); ?>" required>
+                        value="<?php echo htmlspecialchars($user['EMAIL'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="passphrase" required>
+                    <input type="password" class="form-control" name="passphrase">
                 </div>
                 <button type="submit" name="update_profile" class="btn btn-save">Save Changes</button>
+            </form>
+            <form action="deleteUser.php" method="POST">
+            <button type="submit" name="update_profile" class="btn btn-danger">DELETE ACCOUNT</button>
             </form>
         </main>
         <footer class="footer">
