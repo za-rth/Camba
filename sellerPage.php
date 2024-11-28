@@ -257,6 +257,10 @@ if (isset($_SESSION['user_id'])) {
                     width: 70px;
                     top: -2rem;
                 }
+                .highlight {
+                background-color: yellow;
+                transition: background-color 0.3s ease;
+             }
 
                 .profile-image {
                     width: 120px;
@@ -361,6 +365,7 @@ if (isset($_SESSION['user_id'])) {
                                     </a>
                                 </address>
                             </div>
+                            <div class="profile-card"><a href="auction.php">AUCTION</a></div>
                         </aside>
                         <div class="col-lg-9">
                             <div class="row">

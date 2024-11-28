@@ -1,0 +1,42 @@
+.bg-light-purple {
+    background-color: #e6e6fa; /* Light purple background for auction items */
+}
+
+.text-light-purple {
+    color: #663399; /* Light purple text color */
+}
+
+.bg-purple {
+    background-color: white; /* White background for the header */
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Style for the search bar border */
+.border-purple {
+    border: 2px solid #663399; /* Purple border color for the search bar */
+}
+
+/* Additional Styles for buttons and badges */
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border: none; /* Remove border */
+}
+
+.badge-success {
+    background-color: #28a745; /* Green badge for ongoing */
+}
+
+.badge-danger {
+    background-color: #dc3545; /* Red badge for ended */
+}
+
+.auction-item {
+    border-radius: 10px; /* Rounded corners for auction items */
+}

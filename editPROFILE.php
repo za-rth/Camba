@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 include 'functions/deleteUser.php';
-session_start();
+
 
 // Ensure the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     }
 }
 ?>
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,6 +1,14 @@
 <?php
-   include 'config.php'; 
+   include 'config.php';
+
+// Retrieve artwork details from URL parameters
+$artworkId = isset($_GET['artworkId']) ? $_GET['artworkId'] : '';
+$title = isset($_GET['title']) ? htmlspecialchars($_GET['title']) : 'Unknown Title';
+$description = isset($_GET['description']) ? htmlspecialchars($_GET['description']) : 'No description provided.';
+$price = isset($_GET['price']) ? htmlspecialchars($_GET['price']) : '0';
+$imgName = isset($_GET['imgName']) ? htmlspecialchars($_GET['imgName']) : 'default.jpg';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -156,11 +164,11 @@
 </head>
 
 <body>
-    <div class="main-container">
+<div class="main-container">
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <img src="assets/images/logo.png" alt="Company Logo">
+                    <img src="images/CAMBA.png" alt="Company Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,18 +176,10 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/gallery">View Gallery</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/cart">View Cart</a>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link btn btn-link text-decoration-none" onclick="logout()">Logout</button>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/gallery">View Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/cart">View Cart</a></li>
+                        <li class="nav-item"><button class="nav-link btn btn-link text-decoration-none" onclick="logout()">Logout</button></li>
                     </ul>
                 </div>
             </div>
@@ -189,25 +189,20 @@
             <h1 class="order-title">Order Details</h1>
             <div class="order-card">
                 <div class="product-image-container">
-                    <img id="productImage" src="assets/images/product-image.jpg" alt="Product Image"
-                        class="product-image">
+                    <img id="productImage" src="uploads/<?php echo $imgName; ?>" alt="Product Image" class="product-image">
                 </div>
                 <div class="product-details">
                     <div class="detail-group">
                         <label class="detail-label" for="productTitle">Title:</label>
-                        <div id="productTitle" class="detail-value">Example Title</div>
+                        <div id="productTitle" class="detail-value"><?php echo $title; ?></div>
                     </div>
                     <div class="detail-group">
                         <label class="detail-label" for="productDescription">Description:</label>
-                        <div id="productDescription" class="detail-value">Example Description</div>
+                        <div id="productDescription" class="detail-value"><?php echo $description; ?></div>
                     </div>
                     <div class="detail-group">
                         <label class="detail-label" for="productPrice">Price:</label>
-                        <div id="productPrice" class="detail-value">$100.00</div>
-                    </div>
-                    <div class="detail-group">
-                        <label class="detail-label" for="productQuantity">Quantity:</label>
-                        <div id="productQuantity" class="detail-value">1</div>
+                        <div id="productPrice" class="detail-value">$<?php echo $price; ?></div>
                     </div>
                     <button onclick="cancelOrder()" class="cancel-btn" aria-label="Cancel Order">
                         <i class="fas fa-times-circle me-2"></i>Cancel Order
@@ -224,26 +219,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         async function cancelOrder() {
-            try {
-                const orderId = new URLSearchParams(window.location.search).get('id');
-                if (!confirm('Are you sure you want to cancel this order?')) return;
-
-                const response = await fetch(`/api/orders/${orderId}/cancel`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'same-origin'
-                });
-
-                if (!response.ok) throw new Error('Failed to cancel order');
-
-                alert('Order cancelled successfully');
-                setTimeout(() => window.location.href = '/orders', 1500);
-            } catch (error) {
-                console.error('Error cancelling order:', error);
-                alert('Failed to cancel order. Please try again.');
-            }
+            // Implement cancel order functionality
+            alert('Order cancelled successfully');
         }
 
         async function logout() {

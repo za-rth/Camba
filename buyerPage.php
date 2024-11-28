@@ -252,13 +252,10 @@ $result = $connection->query($sql);
             <img src="images/L4.jpg" alt="" class="nav-icon">
             <a href="auction.php">Auction</a>
           </div>
-          <div class="nav-item">
-            <img src="images/L3.jpg" alt="" class="nav-icon">
-            <span>Cart</span>
-          </div>
+          
           <div class="nav-item">
             <img src="images/L5.jpg" alt="" class="nav-icon">
-            <span>Orders</span>
+            <a href="order.php">Orders</a>
           </div>
           <div class="nav-item">
             <img src="images/L6.jpg" alt="" class="nav-icon">
@@ -275,11 +272,11 @@ $result = $connection->query($sql);
               echo "<div>";
               echo "<h3 style='text-align:center; font-weight:bold;'>" . htmlspecialchars($row['TITLE']) . "</h3>";
               echo "<button class='btn btn-primary'  onclick='addToCart(" . $row['ARTWORK_ID'] . ")' style='margin-top: 10px; float:right;'><i class='fas fa-cart-plus'></i> Add to Cart</button>";
-              echo "<button class='btn btn-primary'  onclick='addToCart(" . $row['ARTWORK_ID'] . ")' style='margin-top: 10px; float:right;'><i class='fas fa-cart-plus'></i> Order Now</button>";
+              echo "<button class='btn btn-primary' onclick='orderNow(" . $row['ARTWORK_ID'] . ", \"" . htmlspecialchars($row['TITLE']) . "\", \"" . htmlspecialchars($row['DESCRIPTION']) . "\", " . htmlspecialchars($row['UNITPRICE']) . ", \"" . htmlspecialchars($row['IMG_NAME']) . "\")' style='margin-top: 10px; float:right;'><i class='fas fa-shopping-cart'></i> Order Now</button>";
               echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
               echo "<p >" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
               echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
-              echo "<p>Seller: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
+              echo "<p>Artist: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
               echo "</div><hr>";
             }
           } else {
@@ -342,9 +339,9 @@ $result = $connection->query($sql);
   }
 
   // JavaScript function to handle ordering items
-  function orderNow(artworkId) {
+  /*function orderNow(artworkId) {
     alert("You are ordering artwork with ID " + artworkId + ".");
-  }
+  }*/
 
   // JavaScript function to highlight artist's artwork based on search input
   document.getElementById('search').addEventListener('input', function () {

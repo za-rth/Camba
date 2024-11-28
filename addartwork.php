@@ -1,6 +1,7 @@
 <?php
 include 'config.php';
 require 'functions/addArtwork.php';
+require 'functions/deleteArtwork.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,7 +288,8 @@ require 'functions/addArtwork.php';
                             <input type="file" class="form-control" id="artworkImageName" name="imageName" required>
                         </div>
                         <button type="submit" name="addArtworkForm" class="btn btn-primary">Save Artwork</button>
-                        <button type="submit" style=" background:#A021EF; color: #FFFFFF;"name="addArtworkForm" class="btn ">Add to Auction</button>
+                        <button type="submit" style=" background:#A021EF; color: #FFFFFF;" name="addArtworkForm"
+                            class="btn ">Add to Auction</button>
                     </form>
                 </div>
                 <div class="modal-footer"></div>
@@ -389,11 +391,30 @@ require 'functions/addArtwork.php';
             document.getElementById('editArtworkForm').reset();
         }
 
+
         function deleteArtwork(artworkId) {
-            currentArtworkId = artworkId;
-            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-            deleteModal.show();
+            if (confirm("Are you sure you want to delete this artwork? This action cannot be undone.")) {
+                // Create a form data object
+                const formData = new FormData();
+                formData.append("artwork_id", artworkId);
+
+                // Send an AJAX request to deleteArtwork.php
+                fetch("deleteArtwork.php", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert(data);
+                        location.reload(); // Reload the page to reflect changes
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("There was an error deleting the artwork. Please try again.");
+                    });
+            }
         }
+
 
         function confirmDelete() {
             const modal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
