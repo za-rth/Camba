@@ -193,15 +193,14 @@ require 'functions/manageArtwork.php';
             </button>
             <h2 class="section-title">Your Existing Artworks</h2>
             <?php
-
             // Check if user_id is set in the session
             if (isset($_SESSION['user_id'])) {
                 $user_id = $_SESSION['user_id'];
 
                 // Query to select only artworks from the logged-in user
                 $sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` 
-     FROM `artwork_product_info`
-     WHERE `USER_ID` = ?";
+                FROM `artwork_product_info`
+                WHERE `USER_ID` = ?";
 
                 // Prepare the statement to avoid SQL injection
                 $stmt = $connection->prepare($sql);
@@ -257,7 +256,6 @@ require 'functions/manageArtwork.php';
             }
 
             ?>
-
         </main>
 
 
@@ -313,7 +311,7 @@ require 'functions/manageArtwork.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editArtworkForm" method="POST" action="functions/manageArtwork.php"
+                    <form id="editArtworkForm" method="POST" action=""
                         enctype="multipart/form-data">
                         <input type="hidden" id="editArtworkId" name="artwork_id">
                         <input type="hidden" id="existingImage" name="existing_image">
@@ -329,7 +327,7 @@ require 'functions/manageArtwork.php';
                         </div>
                         <div class="mb-3">
                             <label for="editArtworkSize" class="form-label">Quantity</label>
-                            <input type="text" class="form-control" id="editArtworkSize" name="qtyonhand" required>
+                            <input type="number" class="form-control" id="editArtworkSize" name="qtyonhand" required>
                         </div>
                         <div class="mb-3">
                             <label for="editArtworkYear" class="form-label">Price</label>
@@ -411,7 +409,6 @@ require 'functions/manageArtwork.php';
             const editModal = new bootstrap.Modal(document.getElementById('editArtworkModal'));
             editModal.show();
         }
-        
     </script>
 </body>
 

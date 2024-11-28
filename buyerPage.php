@@ -242,7 +242,7 @@ $result = $connection->query($sql);
           <div class="nav-item">
             <img src="images/L1.jpg" alt="" class="nav-icon">
             <a
-                href="editProfile.php">Profile</a>
+                href="editPROFILE.php">Profile</a>
           </div>
           <div class="nav-item">
             <img src="images/L2.jpg" alt="" class="nav-icon">
@@ -276,7 +276,7 @@ $result = $connection->query($sql);
               echo "<img src='uploads/" . htmlspecialchars($row['IMG_NAME']) . "' alt='" . htmlspecialchars($row['TITLE']) . "' style='width:200px;height:auto;'>";
               echo "<p >" . htmlspecialchars($row['DESCRIPTION']) . "</p>";
               echo "<p>Price: $" . htmlspecialchars($row['UNITPRICE']) . "</p>";
-              echo "<p>Artist: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
+              echo "<p>Artists: " . htmlspecialchars($row['FIRSTNAME'] . " " . $row['LASTNAME']) . "</p>";
               echo "</div><hr>";
             }
           } else {
@@ -285,40 +285,7 @@ $result = $connection->query($sql);
           ?>
         </article>
 
-        <article class="post-card">
-          <div class="post-header">
-            <h3 class="post-title">
-              <strong>"Makabagong Filipina"</strong><br>
-              Mixed Media: Recycled Plastic Bags & Oil Paint<br>
-              Size: 40" x 30"<br>
-              Year: 2023
-            </h3>
-            <div class="post-author">
-              <span class="fw-bold">Xanne</span>
-              <img src="images/a.jpg" alt="Xanne's avatar" class="author-avatar">
-            </div>
-          </div>
-          <img src="images/a2.jpg" alt="Makabagong Filipina artwork" class="post-image">
-        </article>
-        <article class="post-card">
-          <div class="post-header">
-            <h3 class="post-title">
-              <strong>"Resting in Peace"</strong><br>
-              Mixed Media: Recycled Plastic Bags & Oil Paint<br>
-              Size: 25" x 30"<br>
-              Year: 2023
-            </h3>
-            <div class="post-author">
-              <span class="fw-bold">Xanne</span>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe7779d596b47110f79d69209108d3ba84b797c7a9b90a88e0ef967dce2e7218?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                alt="Xanne's avatar" class="author-avatar">
-            </div>
-          </div>
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e259886a1325589643ceda877dc40c72b674cfcfcdcd2788f62a54f12063e8b8?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-            alt="Resting in Peace artwork" class="post-image">
-        </article>
+        
       </section>
       <?php
 
@@ -336,14 +303,6 @@ $result = $connection->query($sql);
   // JavaScript function to handle adding items to the cart
   function addToCart(artworkId) {
     alert("Artwork with ID " + artworkId + " has been added to the cart.");
-  }
-  // JavaScript function to handle ordering items
-  function orderNow(artworkId, title, description, price, imgName) {
-      // Construct the URL with query parameters
-      const url = `order.php?artworkId=${artworkId}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&price=${encodeURIComponent(price)}&imgName=${encodeURIComponent(imgName)}`;
-      
-      // Redirect to the order page
-      window.location.href = url;
   }
 
   // JavaScript function to handle ordering items

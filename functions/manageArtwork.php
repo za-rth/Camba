@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_artwork']) || iss
         $stmt->bind_param("ssidsii", $title, $description, $qty_on_hand, $unit_price, $imageName, $artwork_id, $user_id);
 
         if ($stmt->execute()) {
-            echo "Artwork updated successfully.";
+            echo "<script>alert('Artwork updated successfully')</script>.";
         } else {
             echo "Error updating artwork: " . $stmt->error;
         }
