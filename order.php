@@ -176,7 +176,7 @@ $imgName = isset($_GET['imgName']) ? htmlspecialchars($_GET['imgName']) : 'defau
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sellerPage.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/gallery">View Gallery</a></li>
                         <li class="nav-item"><a class="nav-link" href="/cart">View Cart</a></li>
                         <li class="nav-item"><button class="nav-link btn btn-link text-decoration-none" onclick="logout()">Logout</button></li>

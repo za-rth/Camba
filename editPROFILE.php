@@ -73,16 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
 
     try {
         // Delete the user's profile and account from the database
-        $delete_profile_sql = "DELETE FROM user_profile_registration WHERE REGISTER_ID = ?";
+    
         $delete_account_sql = "DELETE FROM user_account WHERE USER_ID = ?";
-
-        $delete_profile_stmt = $connection->prepare($delete_profile_sql);
-        $delete_profile_stmt->bind_param("i", $user['REGISTER_ID']);
         $delete_account_stmt = $connection->prepare($delete_account_sql);
         $delete_account_stmt->bind_param("i", $user_id);
 
         // Execute the deletion queries
-        if ($delete_profile_stmt->execute() && $delete_account_stmt->execute()) {
+        if ($delete_account_stmt->execute()) {
             // Commit the transaction after successful deletion
             $connection->commit();
             echo "<script>alert('Account deleted successfully.');</script>";
@@ -95,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
             echo "<script>alert('Error deleting account. Please try again.');</script>";
         }
 
-        $delete_profile_stmt->close();
+        
         $delete_account_stmt->close();
     } catch (Exception $e) {
         // Rollback transaction if any exception occurs
@@ -299,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
                 <a href="buyerPage.php" class="nav-link">Home</a>
                 <a href="#" class="nav-link">View Gallery</a>
                 <a href="#" class="nav-link">View Cart</a>
-                <a href="#" class="nav-link" onclick="handleLogout()">Logout</a>
+                <a href="functions/logOut.php" class="nav-link" onclick="handleLogout()">Logout</a>
             </nav>
         </header>
 
@@ -395,7 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             function handleLogout() {
-                alert('Logout clicked!');
+                alert('Are you sure you want to logout? !');
                 // Add logic for logout here
             }
 

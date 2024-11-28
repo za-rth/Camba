@@ -26,9 +26,6 @@ if (!$user) {
     echo "User not found.";
     exit();
 }
-
-
-
 // Handle form submission for deleting profile
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
     // Delete the user's profile and account from the database
