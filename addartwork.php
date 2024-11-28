@@ -1,7 +1,9 @@
 <?php
+
 include 'config.php';
+
 require 'functions/addArtwork.php';
-require 'functions/deleteArtwork.php';
+require 'functions/manageArtwork.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +16,7 @@ require 'functions/deleteArtwork.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         <style>.artwork-container {
             background-color: #fff;
@@ -197,8 +200,8 @@ require 'functions/deleteArtwork.php';
 
                 // Query to select only artworks from the logged-in user
                 $sql = "SELECT `ARTWORK_ID`, `TITLE`, `DESCRIPTION`, `QTYONHAND`, `UNITPRICE`, `IMG_NAME`, `USER_ID`, `LAST_UPDATE` 
-            FROM `artwork_product_info`
-            WHERE `USER_ID` = ?";
+     FROM `artwork_product_info`
+     WHERE `USER_ID` = ?";
 
                 // Prepare the statement to avoid SQL injection
                 $stmt = $connection->prepare($sql);
@@ -209,9 +212,6 @@ require 'functions/deleteArtwork.php';
                 // HTML to display the artworks
                 while ($row = $all_product->fetch_assoc()) {
                     ?>
-
-
-
 
                     <div class="artwork-card">
                         <!-- Dynamically set the image source -->
@@ -232,8 +232,14 @@ require 'functions/deleteArtwork.php';
                         </div>
 
                         <div class="artwork-actions">
-                            <!-- Pass dynamic ARTWORK_ID for edit and delete -->
-                            <button class="btn btn-edit" onclick="editArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
+                            <!-- Pass dynamic ARTWORK_ID and other details using data-* attributes -->
+                            <button class="btn btn-edit" data-artwork-id="<?php echo $row['ARTWORK_ID']; ?>"
+                                data-title="<?php echo htmlspecialchars($row['TITLE'], ENT_QUOTES); ?>"
+                                data-description="<?php echo htmlspecialchars($row['DESCRIPTION'], ENT_QUOTES); ?>"
+                                data-qtyonhand="<?php echo $row['QTYONHAND']; ?>"
+                                data-unitprice="<?php echo $row['UNITPRICE']; ?>"
+                                data-imgname="<?php echo htmlspecialchars($row['IMG_NAME'], ENT_QUOTES); ?>"
+                                onclick="editArtwork(this)">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                             <button class="btn btn-delete" onclick="deleteArtwork(<?php echo $row['ARTWORK_ID']; ?>)">
@@ -241,6 +247,7 @@ require 'functions/deleteArtwork.php';
                             </button>
                         </div>
                     </div>
+
                     <?php
                 }
 
@@ -289,8 +296,7 @@ require 'functions/deleteArtwork.php';
                             <input type="file" class="form-control" id="artworkImageName" name="imageName" required>
                         </div>
                         <button type="submit" name="addArtworkForm" class="btn btn-primary">Save Artwork</button>
-                        <button type="submit" style=" background:#A021EF; color: #FFFFFF;" name="addArtworkForm"
-                            class="btn ">Add to Auction</button>
+
                     </form>
                 </div>
                 <div class="modal-footer"></div>
@@ -307,34 +313,35 @@ require 'functions/deleteArtwork.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <form id="editArtworkForm" method="POST" action="functions/manageArtwork.php"
+                        enctype="multipart/form-data">
+                        <input type="hidden" id="editArtworkId" name="artwork_id">
+                        <input type="hidden" id="existingImage" name="existing_image">
 
-                    <form id="editArtworkForm">
-                        <input type="hidden" id="editArtworkId">
                         <div class="mb-3">
                             <label for="editArtworkTitle" class="form-label">Artwork Title</label>
-                            <input type="text" class="form-control" id="editArtworkTitle" required>
+                            <input type="text" class="form-control" id="editArtworkTitle" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="editArtworkDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="editArtworkDescription" rows="3" required></textarea>
+                            <textarea class="form-control" id="editArtworkDescription" name="description" rows="3"
+                                required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="editArtworkSize" class="form-label">Size</label>
-                            <input type="text" class="form-control" id="editArtworkSize" required>
+                            <label for="editArtworkSize" class="form-label">Quantity</label>
+                            <input type="text" class="form-control" id="editArtworkSize" name="qtyonhand" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editArtworkYear" class="form-label">Year</label>
-                            <input type="number" class="form-control" id="editArtworkYear" required>
+                            <label for="editArtworkYear" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="editArtworkYear" name="unitprice" step="0.01"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="editArtworkImage" class="form-label">Upload New Image (Optional)</label>
-                            <input type="file" class="form-control" id="editArtworkImage" accept="image/*">
+                            <input type="file" class="form-control" id="editArtworkImage" name="image" accept="image/*">
                         </div>
+                        <button type="submit" name="edit_artwork" class="btn btn-primary">Save Changes</button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="editArtworkForm" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -361,53 +368,20 @@ require 'functions/deleteArtwork.php';
 
     <script>
 
-        /*
-    document.getElementById('artworkForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        saveArtwork(formData);
-    });
-
-    document.getElementById('editArtworkForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        updateArtwork(formData);
-    });*/
-
-        function saveArtwork(formData) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addArtworkModal'));
-            modal.hide();
-            document.getElementById('artworkForm').reset();
-        }
-
-        function editArtwork(artworkId) {
-            currentArtworkId = artworkId;
-            const editModal = new bootstrap.Modal(document.getElementById('editArtworkModal'));
-            editModal.show();
-        }
-
-        function updateArtwork(formData) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editArtworkModal'));
-            modal.hide();
-            document.getElementById('editArtworkForm').reset();
-        }
-
-
         function deleteArtwork(artworkId) {
             if (confirm("Are you sure you want to delete this artwork? This action cannot be undone.")) {
-                // Create a form data object
                 const formData = new FormData();
+                formData.append("delete_artwork", true);
                 formData.append("artwork_id", artworkId);
 
-                // Send an AJAX request to deleteArtwork.php
-                fetch("deleteArtwork.php", {
+                fetch("", {
                     method: "POST",
                     body: formData
                 })
                     .then(response => response.text())
                     .then(data => {
                         alert(data);
-                        location.reload(); // Reload the page to reflect changes
+                        location.reload();
                     })
                     .catch(error => {
                         console.error("Error:", error);
@@ -416,12 +390,28 @@ require 'functions/deleteArtwork.php';
             }
         }
 
+        function editArtwork(button) {
+            // Extract data from the data-* attributes of the clicked button
+            const artworkId = button.getAttribute('data-artwork-id');
+            const title = button.getAttribute('data-title');
+            const description = button.getAttribute('data-description');
+            const qtyOnHand = button.getAttribute('data-qtyonhand');
+            const unitPrice = button.getAttribute('data-unitprice');
+            const imgName = button.getAttribute('data-imgname');
 
-        function confirmDelete() {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal'));
-            modal.hide();
-            currentArtworkId = null;
+            // Fill in the details of the artwork into the modal form fields
+            document.getElementById('editArtworkId').value = artworkId;
+            document.getElementById('editArtworkTitle').value = title;
+            document.getElementById('editArtworkDescription').value = description;
+            document.getElementById('editArtworkSize').value = qtyOnHand;
+            document.getElementById('editArtworkYear').value = unitPrice;
+            document.getElementById('existingImage').value = imgName;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editArtworkModal'));
+            editModal.show();
         }
+        
     </script>
 </body>
 

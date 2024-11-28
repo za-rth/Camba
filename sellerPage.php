@@ -306,9 +306,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
                     <ul class="navbar-nav ">
                         <li class="nav-item mr-3">
-                            <button type="button" class="btn p-3 "
-                                style="border-color:#A021EF; background:#A021EF; color: #FFFFFF;">
-                                Home</button>
+
                         </li>
                         <br>
                         <li class="nav-item ml-3">
@@ -331,8 +329,7 @@ if (isset($_SESSION['user_id'])) {
                                 <label for="artwork-search" class="visually-hidden">Search artwork</label>
                                 <input type="search" id="artwork-search" class="search-box" placeholder="Search artwork..."
                                     aria-label="Search artwork">
-                                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1502b3ba5cd9382ee1533e77a5f7043abfa6a2ead3d68dae50a330a9db2ca821?placeholderIfAbsent=true&apiKey=1826919cd84f4b08ba6fcace3d6b37c6"
-                                    alt="" class="search-icon" aria-hidden="true">
+
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -357,6 +354,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="d-flex justify-content-end px-3">
                                     <button class="follow-btn" aria-label="Follow Xanne">Follow +</button>
                                 </div>
+                                
                                 <address class="text-center mt-3">
 
                                     <a href="mailto:roxanne.normandia@gmail.com"
@@ -364,8 +362,11 @@ if (isset($_SESSION['user_id'])) {
                                         <?php echo htmlspecialchars($_SESSION["email"]); ?>
                                     </a>
                                 </address>
+                                <div class="d-flex justify-content-center px-3">
+                                    <button class="follow-btn " style="background:#FFFFFF" ><a href="editprofile.php" style="text-color: #FFFFFF;">Edit Profile</a></button>
+                                </div>
                             </div>
-                            <div class="profile-card"><a href="auction.php">AUCTION</a></div>
+                            <div class="profile-card d-flex justify-content-center px-3"><a href="auction.php">AUCTION</a></div>
                         </aside>
                         <div class="col-lg-9">
                             <div class="row">

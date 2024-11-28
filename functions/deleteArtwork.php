@@ -48,4 +48,3 @@ if (isset($_POST['artwork_id'])) {
 } else {
     echo "Invalid request.";
 }
-?>

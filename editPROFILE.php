@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Get the user ID from the session
+$role = $_SESSION['user_type'];
 $user_id = $_SESSION['user_id'];
 
 // Fetch the user's current profile data
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
 
     try {
         // Delete the user's profile and account from the database
-    
+
         $delete_account_sql = "DELETE FROM user_account WHERE USER_ID = ?";
         $delete_account_stmt = $connection->prepare($delete_account_sql);
         $delete_account_stmt->bind_param("i", $user_id);
@@ -92,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
             echo "<script>alert('Error deleting account. Please try again.');</script>";
         }
 
-        
+
         $delete_account_stmt->close();
     } catch (Exception $e) {
         // Rollback transaction if any exception occurs
@@ -293,7 +294,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
         <header class="header d-flex justify-content-between align-items-center">
             <img src="images/CAMBA.png" alt="Company Logo" class="logo">
             <nav class="d-flex align-items-center">
-                <a href="buyerPage.php" class="nav-link">Home</a>
+
+                <?php
+                // Check if the user's role is set in the session
+                if ($_SESSION['user_type'] === 'Buyer') {
+                    echo '<a href="buyerPage.php" class="nav-link">Home</a>';
+                } elseif ($_SESSION['user_type'] === 'Artist') {
+                    echo '<a href="sellerPage.php" class="nav-link">Home</a>';
+                }else {
+                    // If no role is set, default to a general home page or redirect to login
+                    echo '<a href="index.php" class="nav-link">Home</a>';
+                }
+                ?>
                 <a href="#" class="nav-link">View Gallery</a>
                 <a href="#" class="nav-link">View Cart</a>
                 <a href="functions/logOut.php" class="nav-link" onclick="handleLogout()">Logout</a>
@@ -338,11 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_account'])) {
                     <input type="text" class="form-control" name="zip_code"
                         value="<?php echo htmlspecialchars($user['ZIP_CODE'] ?? ''); ?>" required>
                 </div>
-                <div class="mb-4">
-                    <label class="form-label">Complete Address</label>
-                    <input type="text" class="form-control" name="complete_address"
-                        value="<?php echo htmlspecialchars($user['COMPLETE_ADDRESS'] ?? ''); ?>">
-                </div>
+
                 <div class="mb-4">
                     <label class="form-label">Gender</label>
                     <select class="form-control" name="gender" required>
